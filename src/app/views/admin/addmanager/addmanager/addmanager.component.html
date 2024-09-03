@@ -1,0 +1,60 @@
+<div class="container">
+    <form #f="ngForm" (ngSubmit)="add(f)">
+        <!-- hopitalmanager_fullname validation start here -->
+        <div class="form-group">
+            <label for="hopitalmanager_fullname">Full Name</label>
+            <input type="text" class="form-control" placeholder="Full Name" required name="hopitalmanager_fullname" #hopitalmanager_fullname="ngModel" ngModel>
+        </div>
+        <div class="alert alert-danger" *ngIf="hopitalmanager_fullname.errors?.['required'] && hopitalmanager_fullname.touched">
+            Full Name is required
+        </div>
+        <!-- hopitalmanager_fullname validation end here -->
+
+        <!-- hopitalmanager_phone validation start here -->
+        <div class="form-group">
+            <label for="hopitalmanager_phone">Phone</label>
+            <input type="text" class="form-control" placeholder="Phone" name="hopitalmanager_phone" #hopitalmanager_phone="ngModel" ngModel>
+        </div>
+        <!-- hopitalmanager_phone validation end here -->
+
+        <!-- hopitalmanager_email validation start here -->
+        <div class="form-group">
+            <label for="hopitalmanager_email">Email</label>
+            <input type="email" class="form-control" placeholder="Email" name="hopitalmanager_email" #hopitalmanager_email="ngModel" ngModel>
+        </div>
+        <!-- hopitalmanager_email validation end here -->
+
+        <!-- hopitalmanager_photo validation start here -->
+        <div class="form-group">
+            <label for="hopitalmanager_photo">Photo</label>
+            <input type="text" class="form-control" placeholder="Photo URL" name="hopitalmanager_photo" #hopitalmanager_photo="ngModel" ngModel>
+        </div>
+        <!-- hopitalmanager_photo validation end here -->
+
+         <!-- hopital_id validation start here -->
+         <div class="form-group">
+            <label for="hopital_id">Hospital ID</label>
+            <input type="number" class="form-control" placeholder="Hospital ID" required name="hopital_id" #hopital_id="ngModel" ngModel min="1">
+        </div>
+        <div class="alert alert-danger" *ngIf="hopital_id.errors?.['required'] && hopital_id.touched">
+            Hospital ID is required
+        </div>
+        <div class="alert alert-danger" *ngIf="hopital_id.errors?.['min'] && hopital_id.touched">
+            Hospital ID must be at least 1
+        </div>
+        <!-- hopital_id validation end here -->
+
+        <!-- hopitalmanager_countries validation start here -->
+        <div class="form-group">
+            <label for="hopitalmanager_countries">Countries</label>
+            <input type="text" class="form-control" placeholder="Countries" name="hopitalmanager_countries" #hopitalmanager_countries="ngModel" ngModel>
+        </div>
+        <!-- hopitalmanager_countries validation end here -->
+
+        <button class="btn btn-primary" [disabled]="f.invalid">Add Manager</button>
+    </form>
+</div>
+
+<!-- Ajout de la bibliothèque FontAwesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+

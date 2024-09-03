@@ -1,0 +1,154 @@
+<!-- Begin Page Content -->
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">Liste of managers</h1>
+
+    <!-- DataTales Example -->
+    <!-- Utilisation du conteneur flexbox pour aligner le titre et le bouton sur la même ligne -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3 d-flex justify-content-between align-items-center"> <!-- Changement effectué ici -->
+            <h6 class="m-0 font-weight-bold text-primary">Liste of managers</h6>
+           <!-- <a routerLink="/admin/addhotel" class="btn btn-primary">Add hotel</a>-->
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                           <!-- <th>id</th> -->
+                            <th>Full name</th>
+                            <th>Email</th> 
+                            <th>Phone</th> 
+                            <th>Hospital</th>
+                            <th>country</th>
+                            <th>Action</th>
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of dataArray;index as i">
+                            <!--<td>{{item.hopitalmanager_id}}</td>-->
+                            <td>{{item.hopitalmanager_fullname}}</td>
+                            <td>{{item.hopitalmanager_email}}</td>
+                            <td>{{item.hopitalmanager_phone}}</td>
+                            <td>{{item.hopital_name}}</td>
+                            <td>{{item.hopitalmanager_countries}}</td>
+                            <td>              
+                                <button class="btn btn-success" (click)="getdata(item.hopitalmanager_fullname,item.hopitalmanager_email,item.hopitalmanager_phone,item.hopital_name,item.hopitalmanager_countries,item.hopitalmanager_id)" data-toggle="modal" data-target="#exampleModal">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn btn-danger" (click)="delete(item.hopitalmanager_id,i)">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </td> 
+                        </tr>                                           
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!-- /.container-fluid -->
+
+<!-- Ajout de la bibliothèque FontAwesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"> <!-- Changement effectué ici -->
+
+<!-- MODAL -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Update Manager</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <!-- form update start here -->
+          <form  #f="ngForm" (ngSubmit)="updatenewmanagerUs(f)">
+            <!-- hopitalmanager_fullname validation start here -->
+            <div class="form-group">
+                <label for="hopitalmanager_fullname">Hospital Manager Full Name</label>
+                <input type="text" class="form-control" placeholder="Full Name" [(ngModel)]="dataUser.hopitalmanager_fullname" required name="hopitalmanager_fullname" #hopitalmanager_fullname="ngModel" ngModel minlength="2" maxlength="50">
+            </div>
+            <div class="alert alert-danger" *ngIf="hopitalmanager_fullname.errors?.['required'] && hopitalmanager_fullname.touched">
+                Full Name is required
+            </div>
+            <div class="alert alert-danger" *ngIf="hopitalmanager_fullname.errors?.['minlength'] && hopitalmanager_fullname.touched">
+                Full Name must be at least 2 characters
+            </div>
+            <div class="alert alert-danger" *ngIf="hopitalmanager_fullname.errors?.['maxlength'] && hopitalmanager_fullname.touched">
+                Full Name must be at most 50 characters
+            </div>
+            <!-- hopitalmanager_fullname validation end here -->
+    
+            <!-- hopitalmanager_email validation start here -->
+            <div class="form-group">
+                <label for="hopitalmanager_email">Hospital Manager Email</label>
+                <input type="email" class="form-control" placeholder="Email" [(ngModel)]="dataUser.hopitalmanager_email" required name="hopitalmanager_email" #hopitalmanager_email="ngModel" ngModel email>
+            </div>
+            <div class="alert alert-danger" *ngIf="hopitalmanager_email.errors?.['required'] && hopitalmanager_email.touched">
+                Email is required
+            </div>
+            <div class="alert alert-danger" *ngIf="hopitalmanager_email.errors?.['email'] && hopitalmanager_email.touched">
+                Please enter a valid email address
+            </div>
+            <!-- hopitalmanager_email validation end here -->
+    
+            <!-- hopitalmanager_phone validation start here -->
+            <div class="form-group">
+                <label for="hopitalmanager_phone">Hospital Manager Phone</label>
+                <input type="tel" class="form-control" placeholder="Phone Number" [(ngModel)]="dataUser.hopitalmanager_phone" required name="hopitalmanager_phone" #hopitalmanager_phone="ngModel" ngModel pattern="[0-9]{8}">
+            </div>
+            <div class="alert alert-danger" *ngIf="hopitalmanager_phone.errors?.['required'] && hopitalmanager_phone.touched">
+                Phone Number is required
+            </div>
+            <div class="alert alert-danger" *ngIf="hopitalmanager_phone.errors?.['pattern'] && hopitalmanager_phone.touched">
+                Phone Number must be a 8-digit number
+            </div>
+            <!-- hopitalmanager_phone validation end here -->
+    
+            <!-- hopital_name validation start here -->
+            <div class="form-group">
+                <label for="hopital_name">Hospital Name</label>
+                <input type="text" class="form-control" placeholder="Hospital Name" [(ngModel)]="dataUser.hopital_name" required name="hopital_name" #hopital_name="ngModel" ngModel minlength="2" maxlength="50">
+            </div>
+            <div class="alert alert-danger" *ngIf="hopital_name.errors?.['required'] && hopital_name.touched">
+                Hospital Name is required
+            </div>
+            <div class="alert alert-danger" *ngIf="hopital_name.errors?.['minlength'] && hopital_name.touched">
+                Hospital Name must be at least 2 characters
+            </div>
+            <div class="alert alert-danger" *ngIf="hopital_name.errors?.['maxlength'] && hopital_name.touched">
+                Hospital Name must be at most 50 characters
+            </div>
+            <!-- hopital_name validation end here -->
+
+            <!-- hopitalmanager_countries validation start here -->
+            <div class="form-group">
+                <label for="hopitalmanager_countries">Hospital Manager Countries</label>
+                <input type="text" class="form-control" placeholder="Countries" [(ngModel)]="dataUser.hopitalmanager_countries" required name="hopitalmanager_countries" #hopitalmanager_countries="ngModel" ngModel>
+            </div>
+            <div class="alert alert-danger" *ngIf="hopitalmanager_countries.errors?.['required'] && hopitalmanager_countries.touched">
+                Countries is required
+            </div>
+            <!-- hopitalmanager_countries validation end here -->
+
+    
+            <div class="alert alert-success" *ngIf="messageSuccess">
+                {{messageSuccess}}
+            </div>      
+
+            <button class="btn btn-primary" [disabled]="f.invalid">Update Hospital Manager</button>
+          
+          </form>
+          <!-- form update end here -->
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>

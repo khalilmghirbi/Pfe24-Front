@@ -1,0 +1,140 @@
+<!--<p>doctors works!</p>-->
+<!-- Page Content -->
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">Liste Des Doctors</h1>
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3 d-flex justify-content-between align-items-center">
+            <h6 class="m-0 font-weight-bold text-primary">Liste Des Doctors</h6>
+            <a routerLink="/admin/adddoctor" class="btn btn-primary">+</a>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Full Name</th>
+                            <th>Specialty(ies)</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of dataArray; index as i">
+                            <td>{{ item.hopitalmedecins_fullname }}</td>
+                            <td>{{ item.procedure_name }}</td>
+                            <td>
+                                <button class="btn btn-success" (click)="getdata(item.hopitalmedecins_fullname,item.hopitalmedecins_phone,item.hopitalmedecins_description,item.hopitalmedecins_photo,item.hopitalmedecins_langs,item.hopitalmedecins_cvfile,item.hopitalmedecins_id)" data-toggle="modal" data-target="#exampleModal"  >
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn btn-danger" (click)="delete(item.hopitalmedecins_id, i)">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!-- /.container-fluid -->
+
+<!-- FontAwesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+<!-- MODAL -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Update Doctor</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Form to update doctor information -->
+                <form #f="ngForm" (ngSubmit)="updatenewdoctor(f)">
+                    <!-- Full Name -->
+                    <div class="form-group">
+                        <label for="hopitalmedecins_fullname">Full Name</label>
+                        <input type="text" class="form-control" placeholder="Full Name"
+                            [(ngModel)]="dataMedecin.hopitalmedecins_fullname" required
+                            name="hopitalmedecins_fullname" #fullname="ngModel">
+                        <div class="alert alert-danger" *ngIf="fullname.errors?.['required'] && fullname.touched">
+                            Full Name is required
+                        </div>
+                    </div>
+
+                    <!-- Phone -->
+                    <div class="form-group">
+                        <label for="hopitalmedecins_phone">Phone</label>
+                        <input type="text" class="form-control" placeholder="Phone"
+                            [(ngModel)]="dataMedecin.hopitalmedecins_phone" name="hopitalmedecins_phone">
+                    </div>
+
+                    <!-- Description -->
+                    <div class="form-group">
+                        <label for="hopitalmedecins_description">Description</label>
+                        <textarea class="form-control" placeholder="Description"
+                            [(ngModel)]="dataMedecin.hopitalmedecins_description" name="hopitalmedecins_description"></textarea>
+                    </div>
+
+                    <!-- Photo -->
+                    <div class="form-group">
+                        <label for="hopitalmedecins_photo">Photo</label>
+                        <input type="text" class="form-control" placeholder="Photo"
+                            [(ngModel)]="dataMedecin.hopitalmedecins_photo" name="hopitalmedecins_photo">
+                    </div>
+
+                    <!-- Languages -->
+                    <div class="form-group">
+                        <label for="hopitalmedecins_langs">Languages</label>
+                        <input type="text" class="form-control" placeholder="Languages"
+                            [(ngModel)]="dataMedecin.hopitalmedecins_langs" name="hopitalmedecins_langs">
+                    </div>
+
+                    <!-- Status -->
+                    <div class="form-group">
+                        <label for="hopitalmedecins_status">Status</label>
+                        <input type="number" class="form-control" placeholder="Status"
+                            [(ngModel)]="dataMedecin.hopitalmedecins_status" name="hopitalmedecins_status">
+                    </div>
+
+                    <!-- CV File -->
+                    <div class="form-group">
+                        <label for="hopitalmedecins_cvfile">CV File</label>
+                        <input type="text" class="form-control" placeholder="CV File"
+                            [(ngModel)]="dataMedecin.hopitalmedecins_cvfile" name="hopitalmedecins_cvfile">
+                    </div>
+
+                    <!-- Procedure Name -->
+                    <div class="form-group">
+                        <label for="procedure_name">Procedure Name</label>
+                        <input type="text" class="form-control" placeholder="Procedure Name"
+                            [(ngModel)]="dataMedecin.procedure_name" name="procedure_name">
+                    </div>
+
+                    <!-- Success Message -->
+                    <div class="alert alert-success" *ngIf="messageSuccess">
+                        {{ messageSuccess }}
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button class="btn btn-primary" [disabled]="f.invalid">Update Doctor</button>
+
+                </form>
+                <!-- Form end -->
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+

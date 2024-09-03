@@ -1,0 +1,72 @@
+<div class="container">
+    <form #d="ngForm" (ngSubmit)="add(d)">
+        <!-- Full Name validation start here -->
+        <div class="form-group">
+            <label for="fullname">Full Name</label>
+            <input type="text" class="form-control" placeholder="Full Name" required name="hopitalmedecins_fullname" #fullname="ngModel" ngModel minlength="2" maxlength="50">
+        </div>
+        <div class="alert alert-danger" *ngIf="fullname.errors?.['required'] && fullname.touched">
+            Full name is required
+        </div>
+        <div class="alert alert-danger" *ngIf="fullname.errors?.['minlength'] && fullname.touched">
+            Full name must be at least 2 characters
+        </div>
+        <div class="alert alert-danger" *ngIf="fullname.errors?.['maxlength'] && fullname.touched">
+            Full name must be less than 50 characters
+        </div>
+        <!-- Full Name validation end here -->
+
+        <!-- Hopital ID validation start here -->
+        <div class="form-group">
+            <label for="hopital_id">Hopital ID</label>
+            <input type="number" class="form-control" placeholder="Hopital ID" required name="hopital_id" #hopital_id="ngModel" ngModel>
+        </div>
+        <div class="alert alert-danger" *ngIf="hopital_id.errors?.['required'] && hopital_id.touched">
+            Hopital ID is required
+        </div>
+        <!-- Hopital ID validation end here -->
+
+        <!-- Phone validation start here -->
+        <div class="form-group">
+            <label for="phone">Phone</label>
+            <input type="text" class="form-control" placeholder="Phone" name="hopitalmedecins_phone" #phone="ngModel" ngModel pattern="^[0-9-+\s()]*$">
+        </div>
+        <div class="alert alert-danger" *ngIf="phone.errors?.['pattern'] && phone.touched">
+            Phone must be a valid number
+        </div>
+        <!-- Phone validation end here -->
+
+        <!-- Photo validation start here -->
+        <div class="form-group">
+            <label for="photo">Photo URL</label>
+            <input type="text" class="form-control" placeholder="Photo URL" name="hopitalmedecins_photo" #photo="ngModel" ngModel>
+        </div>
+        <!-- Photo validation end here -->
+
+        <!-- CV & Experiences validation start here -->
+        <div class="form-group">
+            <label for="cvfile">Doctor's CV & Experiences</label>
+            <input type="text" class="form-control" placeholder="Doctor's CV & Experiences" name="hopitalmedecins_cvfile" #cvfile="ngModel" ngModel>
+        </div>
+        <!-- CV & Experiences validation end here -->
+
+        <!-- Languages validation start here -->
+        <div class="form-group">
+            <label for="langs">Spoken Languages</label>
+            <input type="text" class="form-control" placeholder="Spoken Languages" name="hopitalmedecins_langs" #langs="ngModel" ngModel>
+        </div>
+        <!-- Languages validation end here -->
+
+        <!-- Specialities validation start here -->
+        <div class="form-group">
+            <label for="specialities">Specialities</label>
+            <input type="text" class="form-control" placeholder="Specialities" name="specialities" #specialities="ngModel" ngModel>
+        </div>
+        <!-- Specialities validation end here -->
+
+        <button class="btn btn-primary" [disabled]="d.invalid">Add Doctor</button>
+    </form>
+</div>
+
+<!-- Ajout de la bibliothèque FontAwesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">

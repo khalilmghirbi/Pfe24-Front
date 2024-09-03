@@ -1,0 +1,27 @@
+<div class="container">
+    <form #f="ngForm" (ngSubmit)="add(f)">
+        <!-- hopitalcontacts_fullname validation start here -->
+        <div class="form-group">
+            <label for="hopitalcontacts_fullname">Full Name</label>
+            <input type="text" class="form-control" placeholder="Enter full name" required name="hopitalcontacts_fullname" #hopitalcontacts_fullname="ngModel" ngModel>
+        </div>
+        <div class="alert alert-danger" *ngIf="hopitalcontacts_fullname.errors?.['required'] && hopitalcontacts_fullname.touched">
+            Full Name is required
+        </div>
+        <!-- hopitalcontacts_fullname validation end here -->
+        <!-- hopitalcontacts_email validation start here -->
+        <div class="form-group">
+            <label for="hopitalcontacts_email">Email</label>
+            <input type="email" class="form-control" placeholder="Enter email" required name="hopitalcontacts_email" #hopitalcontacts_email="ngModel" ngModel>
+        </div>
+        <div class="alert alert-danger" *ngIf="hopitalcontacts_email.errors?.['required'] && hopitalcontacts_email.touched">
+            Email is required
+        </div>
+        <!-- hopitalcontacts_email validation end here -->
+
+        <button class="btn btn-primary" [disabled]="f.invalid">Add Contact</button>
+    </form>
+</div>
+
+<!-- Ajout de la bibliothèque FontAwesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">

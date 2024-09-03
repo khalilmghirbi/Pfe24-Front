@@ -1,0 +1,138 @@
+<!--<p>case-managers works!</p>-->
+<!-- Begin Page Content -->
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">Liste Case Manager</h1>
+
+    <!-- DataTales Example -->
+    <!-- Utilisation du conteneur flexbox pour aligner le titre et le bouton sur la même ligne -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3 d-flex justify-content-between align-items-center"> <!-- Changement effectué ici -->
+            <h6 class="m-0 font-weight-bold text-primary">Liste Des Case Manager</h6>
+            <a routerLink="/admin/addmanager" class="btn btn-primary">+Add Case Manager</a>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Full Name</th>
+                            <th>Email</th> 
+                            <th>Countries</th> 
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of dataArray ;index as i" >
+                            <td>{{item.hopitalmanager_fullname}}</td>
+                            <td>{{item.hopitalmanager_email}}</td>
+                            <td>{{item.hopitalmanager_countries}}</td>
+                            
+                            <td>
+                                <!-- Boutons remplacés par des icônes FontAwesome -->
+                                <button class="btn btn-success" (click)="getdata(item.hopital_id,item.hopitalmanager_fullname,item.hopitalmanager_phone,item.hopitalmanager_email,item.hopitalmanager_photo,item.hopitalmanager_countries,item.hopitalmanager_id)" data-toggle="modal" data-target="#exampleModal" >
+                                    <i class="fas fa-edit"></i> 
+                                </button>
+                                <button class="btn btn-danger">
+                                    <i class="fas fa-trash-alt"></i> 
+                                </button>
+                            </td>
+                        </tr>                                           
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!-- /.container-fluid -->
+
+<!-- Ajout de la bibliothèque FontAwesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"> <!-- Changement effectué ici -->
+
+<!-- MODAL -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Update Manager</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <!-- form update start here -->
+          <form #f="ngForm" (ngSubmit)="updatenewmanager(f)">
+            
+            <!-- hopital_id validation start here -->
+            <div class="form-group">
+              <label for="hopital_id">Hospital ID</label>
+              <input type="number" class="form-control" placeholder="Hospital ID" [(ngModel)]="dataManager.hopital_id" required name="hopital_id" #hopital_id="ngModel" ngModel min="1">
+            </div>
+            <div class="alert alert-danger" *ngIf="hopital_id.errors?.['required'] && hopital_id.touched">
+              Hospital ID is required
+            </div>
+            <div class="alert alert-danger" *ngIf="hopital_id.errors?.['min'] && hopital_id.touched">
+              Hospital ID must be at least 1
+            </div>
+            <!-- hopital_id validation end here -->
+            
+            <!-- hopitalmanager_fullname validation start here -->
+            <div class="form-group">
+              <label for="hopitalmanager_fullname">Full Name</label>
+              <input type="text" class="form-control" placeholder="Full Name" [(ngModel)]="dataManager.hopitalmanager_fullname" required name="hopitalmanager_fullname" #hopitalmanager_fullname="ngModel" ngModel>
+            </div>
+            <div class="alert alert-danger" *ngIf="hopitalmanager_fullname.errors?.['required'] && hopitalmanager_fullname.touched">
+              Full Name is required
+            </div>
+            <!-- hopitalmanager_fullname validation end here -->
+            
+            <!-- hopitalmanager_phone validation start here -->
+            <div class="form-group">
+              <label for="hopitalmanager_phone">Phone</label>
+              <input type="text" class="form-control" placeholder="Phone" [(ngModel)]="dataManager.hopitalmanager_phone" name="hopitalmanager_phone" #hopitalmanager_phone="ngModel" ngModel>
+            </div>
+            <!-- hopitalmanager_phone validation end here -->
+            
+            <!-- hopitalmanager_email validation start here -->
+            <div class="form-group">
+              <label for="hopitalmanager_email">Email</label>
+              <input type="email" class="form-control" placeholder="Email" [(ngModel)]="dataManager.hopitalmanager_email" name="hopitalmanager_email" #hopitalmanager_email="ngModel" ngModel>
+            </div>
+            <!-- hopitalmanager_email validation end here -->
+            
+            <!-- hopitalmanager_photo validation start here -->
+            <div class="form-group">
+              <label for="hopitalmanager_photo">Photo URL</label>
+              <input type="text" class="form-control" placeholder="Photo URL" [(ngModel)]="dataManager.hopitalmanager_photo" name="hopitalmanager_photo" #hopitalmanager_photo="ngModel" ngModel>
+            </div>
+            <!-- hopitalmanager_photo validation end here -->
+            
+            <!-- hopitalmanager_countries validation start here -->
+            <div class="form-group">
+              <label for="hopitalmanager_countries">Countries</label>
+              <input type="text" class="form-control" placeholder="Countries" [(ngModel)]="dataManager.hopitalmanager_countries" name="hopitalmanager_countries" #hopitalmanager_countries="ngModel" ngModel>
+            </div>
+            <!-- hopitalmanager_countries validation end here -->
+            
+            <div class="alert alert-success" *ngIf="messageSuccess">
+              {{messageSuccess}}
+            </div>      
+
+            <button class="btn btn-primary" [disabled]="f.invalid">Update Manager</button>
+          
+          </form>
+          <!-- form update end here -->
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!-- Ajout de la bibliothèque FontAwesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+

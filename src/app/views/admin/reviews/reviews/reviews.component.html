@@ -1,0 +1,221 @@
+<!-- Begin Page Content -->
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">Liste of Reviews</h1>
+
+    <!-- DataTales Example -->
+    <!-- Utilisation du conteneur flexbox pour aligner le titre et le bouton sur la même ligne -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3 d-flex justify-content-between align-items-center"> <!-- Changement effectué ici -->
+            <h6 class="m-0 font-weight-bold text-primary">Liste of Reviews</h6>
+           <!-- <a routerLink="/admin/addhotel" class="btn btn-primary">Add hotel</a>-->
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Reception date</th>
+                            <th>Patient Name</th> 
+                            <th>Procédure</th> 
+                            <th>Hospital</th>
+                            <th>case manager</th>
+                            <th>Message</th>
+                            <th>Rate</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of dataArray;index as i">
+                            <td>{{item.hopitalavis_date}}</td>
+                            <td>{{item.hopitalavis_fullname}}</td>
+                            <td>{{item.procedure_name}}</td>
+                            <td>{{item.hopital_name}}</td>
+                            <td>{{item.hopitalmanager_fullname}}</td>
+                            <td>{{item.hopitalavis_comment}}</td>
+                            <td>{{item.hopitalavis_moyenne_rate}}</td>
+                           <!-- <td>              
+                                <span style="background-color: red;" *ngIf="item.hopitalavis_reply?.length < 5">Awaiting</span>
+                                <span style="background-color: green;" *ngIf="item.hopitalavis_reply?.length > 5">Answered</span>
+                            </td>-->
+                            <td>              
+                                <div *ngIf="item.hopitalavis_reply?.length < 5">
+                                    <span class="badge badge-danger d-block mb-2">Awaiting</span>
+                                    <button class="btn btn-link" (click)="edit(item.hopitalavis_id)"  data-toggle="modal"  data-target="#exampleModalCenter">
+                                        <span class="badge badge-primary">
+                                            Reply <i class="fas fa-reply"></i> <!-- Icône de réponse (flèche retournée) -->
+                                        </span>
+                                    </button>
+                                </div>
+                                <div *ngIf="item.hopitalavis_reply?.length > 5">
+                                    <span class="badge badge-success d-block">Answered</span>
+                                </div>
+                            </td> 
+                        </tr>                                           
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!-- /.container-fluid -->
+
+<!-- Ajout de la bibliothèque FontAwesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"> <!-- Changement effectué ici -->
+
+  
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalCenterTitle">Reply</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <!-- <form  #> -->
+                    <div class="modal-body">
+                       
+                        <form method="post" action="/path/to/hopital.php" enctype="multipart/form-data">
+                            <input type="hidden" name="action" value="contactUpdate">
+                            <input type="hidden" name="id" value="ID_VALUE"> <!-- Remplacez ID_VALUE par la valeur appropriée -->
+                            <input type="hidden" name="leDossier" value="DOSSIER_VALUE"> <!-- Remplacez DOSSIER_VALUE par la valeur appropriée -->
+                            <input type="hidden" name="redirect" value="REDIRECT_URL"> <!-- Remplacez REDIRECT_URL par l'URL de redirection appropriée -->
+                            <input type="hidden" name="class" value="hopital_avis">
+                            
+                            <div class="modal-header">
+                                <h4 class="modal-title">
+                                    Reply to review of: 
+                                    <div class="badge badge-light h3 p-2" style="font-size: 20px;">
+                                        <!-- Remplacez FULL_NAME par le nom complet du patient -->
+                                        {{dataReview.hopitalavis_fullname}}
+                                    </div>
+                                </h4>
+                                <div style="position: absolute; right: 10%;">
+                                    <!-- Placeholder pour l'image du gestionnaire -->
+                                    <img src="MANAGER_IMAGE_SRC" class="img-profile-folder mr-2" alt="MANAGER_NAME">
+                                    <div class="badge badge-light h3" style="font-size: 16px;">{{dataReview.hopitalmanager_fullname}}</div>
+                                </div>
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+                            
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="form-group col-4">
+                                        <label class="col-form-label"><b>Review Reception Date</b></label>
+                                        <div class="row">
+                                            <div class="col-9">
+                                                <input class="form-control" type="text" name="hopitalavis_date" [value]= "dataReview.hopitalavis_fullname" disabled>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-4">
+                                        <label class="col-form-label"><b>Appointment Date</b></label>
+                                        <div class="row">
+                                            <div class="col-10">
+                                                <input class="form-control" type="text" name="hopitalavis_moyenne_rate" value="APPOINTMENT_DATE" disabled>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-4">
+                                        <label class="col-form-label"><b>Medical Procedure</b></label>
+                                        <div class="row">
+                                            <div class="col-10">
+                                                <input class="form-control" type="text" name="hopitalavis_moyenne_rate" [value]="dataReview.procedure_name" disabled>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="row">
+                                    <div class="form-group col-6 offset-2 mt-4" style="border: solid 2px orange; padding-bottom: 10px; border-radius: 5px;">
+                                        <label class="col-form-label"><b>Global Note</b></label>
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <input class="form-control" type="number" name="hopitalavis_moyenne_rate" [value]="dataReview.hopitalavis_moyenne_rate" min="1" max="5" disabled>
+                                            </div>
+                                            <div class="col-6 text-left">
+                                                <h3 class="text-left">/ 5</h3>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="row">
+                                    <div class="form-group col-5 offset-2">
+                                        <label class="col-form-label"><b>Clinic Rate</b></label>
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <input class="form-control" type="text" name="hopitalavis_note" [value]="dataReview.hopitalavis_note" min="1" max="5" disabled>
+                                            </div>
+                                            <div class="col-6 text-left">
+                                                <h3 class="text-left">/ 5</h3>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-5">
+                                        <label class="col-form-label"><b>Welcoming & Translators Rate</b></label>
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <input class="form-control" type="text" name="hopitalavis_translator_rate" [value]="dataReview.hopitalavis_translator_rate" min="1" max="5" disabled>
+                                            </div>
+                                            <div class="col-6 text-left">
+                                                <h3 class="text-left">/ 5</h3>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-5 offset-2">
+                                        <label class="col-form-label"><b>Transportations - Hotel Rate</b></label>
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <input class="form-control" type="text" name="hopitalavis_service_rate" [value]="dataReview.hopitalavis_service_rate" min="1" max="5" disabled>
+                                            </div>
+                                            <div class="col-6 text-left">
+                                                <h3 class="text-left">/ 5</h3>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-5">
+                                        <label class="col-form-label"><b>Doctor Rate</b></label>
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <input class="form-control" type="text" name="hopitalavis_medecin_rate" [value]="dataReview.hopitalavis_medecin_rate" min="1" max="5" disabled>
+                                            </div>
+                                            <div class="col-6 text-left">
+                                                <h3 class="text-left">/ 5</h3>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group row">
+                                    <label class="col-form-label col-sm-12"><b>Review:</b></label>
+                                    <div class="col-12">
+                                        <textarea class="form-control" rows="7" name="hopitalavis_comment" disabled>{{dataReview.hopitalavis_comment}}</textarea>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="col-form-label pb-0">Your reply (will be published on our website) *</label>
+                                    <div class="text-muted small mb-1 text-danger">
+                                        In order to preserve medical confidentiality, do not indicate the name of your patient in your answer as it will be published online instantly. Please answer only in English.
+                                    </div>
+                                    <textarea #replyText class="form-control" name="hopitalavis_reply" rows="7"></textarea>
+                                </div>
+                            </div>
+                            
+                            <div class="modal-footer">
+                                <button class="btn btn-secondary" type="reset" data-dismiss="modal">Cancel</button>
+                                <button class="btn btn-primary" type="submit" (click)="reply(replyText.value)" >Reply</button>
+                            </div>
+                        </form>
+                        
+        </div>
+        
+      </div>
+    </div>
+  </div>

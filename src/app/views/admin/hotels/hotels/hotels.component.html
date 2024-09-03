@@ -1,0 +1,156 @@
+<!--<p>inquiries works!</p>-->
+<!-- Begin Page Content -->
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">Liste Des Hotels</h1>
+
+    <!-- DataTales Example -->
+    <!-- Utilisation du conteneur flexbox pour aligner le titre et le bouton sur la même ligne -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3 d-flex justify-content-between align-items-center"> <!-- Changement effectué ici -->
+            <h6 class="m-0 font-weight-bold text-primary">Liste Des Hotels</h6>
+            <a routerLink="/admin/addhotel" class="btn btn-primary">Add hotel</a>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Stars</th> 
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of dataArray;index as i">
+                            <td>{{item.hotel_name}}</td>
+                            <td>{{item.hotel_stars}}</td>
+                            <td>
+                                <!-- Boutons remplacés par des icônes FontAwesome -->
+                                <button class="btn btn-success" (click)="getdata(item.hotel_name,item.hotel_stars,item.hotel_link,item.hotel_singleroom,item.hotel_doubleroom,item.hotel_address,item.hotel_id)" data-toggle="modal" data-target="#exampleModal">
+                                    <i class="fas fa-edit"></i> <!-- Changement effectué ici -->
+                                </button>
+                                <button class="btn btn-danger" (click)="delete(item.hotel_id,i)">
+                                    <i class="fas fa-trash-alt"></i> <!-- Changement effectué ici -->
+                                </button>
+                            </td>
+                        </tr>                                           
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!-- /.container-fluid -->
+
+<!-- Ajout de la bibliothèque FontAwesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"> <!-- Changement effectué ici -->
+
+<!-- MODAL -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <!-- form update start here -->
+          <form  #f="ngForm" (ngSubmit)="updatenewhotel(f)">
+            <!-- hotel_name validation start here -->
+            <div class="form-group">
+                <label for="hotel_name">Hotel Name</label>
+                <input type="text" class="form-control" placeholder="hotel_name" [(ngModel)]="dataHotel.hotel_name" required name="hotel_name" #hotel_name="ngModel" ngModel minlength="2" maxlength="20">
+            </div>
+            <div class="alert alert-danger" *ngIf="hotel_name.errors?.['required'] && hotel_name.touched">
+                Hotel Name is required
+            </div>
+            <div class="alert alert-danger" *ngIf="hotel_name.errors?.['minlength'] && hotel_name.touched">
+                Hotel Name must be at least 2 characters
+            </div>
+            <!-- hotel_name validation end here -->
+    
+            <!-- hotel_stars validation start here -->
+            <div class="form-group">
+                <label for="hotel_stars">Hotel Stars</label>
+                <input type="number" class="form-control" placeholder="hotel_stars" [(ngModel)]="dataHotel.hotel_stars" required name="hotel_stars" #hotel_stars="ngModel" ngModel min="1" max="5">
+            </div>
+            <div class="alert alert-danger" *ngIf="hotel_stars.errors?.['required'] && hotel_stars.touched">
+                Hotel Stars is required
+            </div>
+            <div class="alert alert-danger" *ngIf="hotel_stars.errors?.['min'] && hotel_stars.touched">
+                Hotel Stars must be at least 1
+            </div>
+            <div class="alert alert-danger" *ngIf="hotel_stars.errors?.['max'] && hotel_stars.touched">
+                Hotel Stars must be at most 5
+            </div>
+            <!-- hotel_stars validation end here -->
+    
+            <!-- hotel_singleroom validation start here -->
+            <div class="form-group">
+                <label for="hotel_singleroom">Single Rooms</label>
+                <input type="number" class="form-control" placeholder="hotel_singleroom" [(ngModel)]="dataHotel.hotel_singleroom" required name="hotel_singleroom" #hotel_singleroom="ngModel" ngModel min="1">
+            </div>
+            <div class="alert alert-danger" *ngIf="hotel_singleroom.errors?.['required'] && hotel_singleroom.touched">
+                Single Rooms are required
+            </div>
+            <div class="alert alert-danger" *ngIf="hotel_singleroom.errors?.['min'] && hotel_singleroom.touched">
+                Single Rooms must be at least 1
+            </div>
+            <!-- hotel_singleroom validation end here -->
+    
+            <!-- hotel_doubleroom validation start here -->
+            <div class="form-group">
+                <label for="hotel_doubleroom">Double Rooms</label>
+                <input type="number" class="form-control" placeholder="hotel_doubleroom" [(ngModel)]="dataHotel.hotel_doubleroom" required name="hotel_doubleroom" #hotel_doubleroom="ngModel" ngModel min="1">
+            </div>
+            <div class="alert alert-danger" *ngIf="hotel_doubleroom.errors?.['required'] && hotel_doubleroom.touched">
+                Double Rooms are required
+            </div>
+            <div class="alert alert-danger" *ngIf="hotel_doubleroom.errors?.['min'] && hotel_doubleroom.touched">
+                Double Rooms must be at least 1
+            </div>
+            <!-- hotel_doubleroom validation end here -->
+    
+            <!-- hotel_address validation start here -->
+            <div class="form-group">
+                <label for="hotel_address">Hotel Address</label>
+                <input type="text" class="form-control" placeholder="hotel_address" [(ngModel)]="dataHotel.hotel_address" required name="hotel_address" #hotel_address="ngModel" ngModel>
+            </div>
+            <div class="alert alert-danger" *ngIf="hotel_address.errors?.['required'] && hotel_address.touched">
+                Hotel Address is required
+            </div>
+            <!-- hotel_address validation end here -->
+    
+            <!-- hotel_link validation start here -->
+            <div class="form-group">
+                <label for="hotel_link">Hotel Link</label>
+                <input type="text" class="form-control" placeholder="hotel_link" [(ngModel)]="dataHotel.hotel_link" required name="hotel_link" #hotel_link="ngModel" ngModel>
+            </div>
+            <div class="alert alert-danger" *ngIf="hotel_link.errors?.['required'] && hotel_link.touched">
+                Hotel Link is required
+            </div>
+            <!-- hotel_link validation end here -->
+    
+            <div class="alert alert-success" *ngIf="messageSuccess">
+                {{messageSuccess}}
+            </div>      
+
+           <button class="btn btn-primary" [disabled]="f.invalid">Update Hotel</button>
+          
+        </form>
+
+          <!-- form update end here -->
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+

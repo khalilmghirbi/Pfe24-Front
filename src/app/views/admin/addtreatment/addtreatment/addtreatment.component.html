@@ -1,0 +1,21 @@
+<div class="container">
+    <form #f="ngForm" (ngSubmit)="add(f)">
+      <!-- procedure_name validation start here -->
+<div class="form-group">
+    <label for="procedure_name">Procedure Name</label>
+    <input type="text" class="form-control" placeholder="procedure_name" required name="procedure_name" #procedure_name="ngModel" ngModel minlength="2" maxlength="20">
+</div>
+<div class="alert alert-danger" *ngIf="procedure_name.errors?.['required'] && procedure_name.touched">
+    Procedure Name is required
+</div>
+<div class="alert alert-danger" *ngIf="procedure_name.errors?.['minlength'] && procedure_name.touched">
+    Procedure Name must be at least 2 characters
+</div>
+<!-- procedure_name validation end here -->
+ 
+        <button class="btn btn-primary" [disabled]="f.invalid">Add Hotel</button>
+    </form>
+</div>
+
+<!-- Ajout de la bibliothèque FontAwesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
