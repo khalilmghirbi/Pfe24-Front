@@ -4,6 +4,7 @@ import { FrontLayoutComponent } from './layout/front-layout/front-layout.compone
 import { AdminLayoutComponent } from './layout/admin-layout/admin-layout.component';
 import { AuthAdminLayoutComponent } from './layout/auth-admin-layout/auth-admin-layout.component';
 import { GuardadminGuard } from './views/guards/guardadmin.guard';
+import { ClinicProfileComponent } from './views/admin/clinics/clinics/clinic-profile/clinic-profile.component';
 
 const routes: Routes = [
   {path:'',component:FrontLayoutComponent,children:[
@@ -18,6 +19,7 @@ const routes: Routes = [
     {path:'reviews',loadChildren:()=>import('./views/admin/reviews/reviews.module').then(m=>m.ReviewsModule)},
     {path:'users',loadChildren:()=>import('./views/admin/users/users.module').then(m=>m.UsersModule)},
     {path:'clinics',loadChildren:()=>import('./views/admin/clinics/clinics.module').then(m=>m.ClinicsModule)},
+    //{ path: 'clinics/profile/:id', component: ClinicProfileComponent }, // Add the route for ClinicProfileComponent with an ID parameter
     {path:'hotels',loadChildren:()=>import('./views/admin/hotels/hotels.module').then(m=>m.HotelsModule)},
     {path:'doctors',loadChildren:()=>import('./views/admin/doctors/doctors.module').then(m=>m.DoctorsModule)},
     {path:'managers',loadChildren:()=>import('./views/admin/managers/managers.module').then(m=>m.ManagersModule)},
@@ -25,7 +27,7 @@ const routes: Routes = [
     {path:'treatments',loadChildren:()=>import('./views/admin/treatments/treatments.module').then(m=>m.TreatmentsModule)},
     {path:'photos',loadChildren:()=>import('./views/admin/media/media.module').then(m=>m.MediaModule)},
     {path:'allreviews',loadChildren:()=>import('./views/admin/allreviews/allreviews.module').then(m=>m.AllreviewsModule)},
-    {path:'allrdvs',loadChildren:()=>import('./views/admin/rdv/rdv.module').then(m=>m.RDVModule)},
+    {path:'rdvsbydossierid/:id',loadChildren:()=>import('./views/admin/rdv/rdv.module').then(m=>m.RDVModule)},
     {path:'quotations',loadChildren:()=>import('./views/admin/quotations/quotations.module').then(m=>m.QuotationsModule)},
     {path:'addhotel',loadChildren:()=>import('./views/admin/addhotel/addhotel.module').then(m=>m.AddhotelModule)},
     {path:'adddoctor',loadChildren:()=>import('./views/admin/adddoctor/adddoctor.module').then(m=>m.AdddoctorModule)},

@@ -1,83 +1,194 @@
-<div class="container">
-    <form #f="ngForm" (ngSubmit)="add(f)">
-        <!-- hotel_name validation start here -->
-        <div class="form-group">
-            <label for="hotel_name">Hotel Name</label>
-            <input type="text" class="form-control" placeholder="hotel_name" required name="hotel_name" #hotel_name="ngModel" ngModel minlength="2" maxlength="20">
-        </div>
-        <div class="alert alert-danger" *ngIf="hotel_name.errors?.['required'] && hotel_name.touched">
-            Hotel Name is required
-        </div>
-        <div class="alert alert-danger" *ngIf="hotel_name.errors?.['minlength'] && hotel_name.touched">
-            Hotel Name must be at least 2 characters
-        </div>
-        <!-- hotel_name validation end here -->
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajouter un Hôtel</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(120deg, #3498db, #8e44ad);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+        }
 
-        <!-- hotel_stars validation start here -->
-        <div class="form-group">
-            <label for="hotel_stars">Hotel Stars</label>
-            <input type="number" class="form-control" placeholder="hotel_stars" required name="hotel_stars" #hotel_stars="ngModel" ngModel min="1" max="5">
-        </div>
-        <div class="alert alert-danger" *ngIf="hotel_stars.errors?.['required'] && hotel_stars.touched">
-            Hotel Stars is required
-        </div>
-        <div class="alert alert-danger" *ngIf="hotel_stars.errors?.['min'] && hotel_stars.touched">
-            Hotel Stars must be at least 1
-        </div>
-        <div class="alert alert-danger" *ngIf="hotel_stars.errors?.['max'] && hotel_stars.touched">
-            Hotel Stars must be at most 5
-        </div>
-        <!-- hotel_stars validation end here -->
+        .container {
+            background-color: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            max-width: 500px;
+            width: 100%;
+        }
 
-        <!-- hotel_singleroom validation start here -->
-        <div class="form-group">
-            <label for="hotel_singleroom">Single Rooms</label>
-            <input type="number" class="form-control" placeholder="hotel_singleroom" required name="hotel_singleroom" #hotel_singleroom="ngModel" ngModel min="1">
-        </div>
-        <div class="alert alert-danger" *ngIf="hotel_singleroom.errors?.['required'] && hotel_singleroom.touched">
-            Single Rooms are required
-        </div>
-        <div class="alert alert-danger" *ngIf="hotel_singleroom.errors?.['min'] && hotel_singleroom.touched">
-            Single Rooms must be at least 1
-        </div>
-        <!-- hotel_singleroom validation end here -->
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+            font-family: 'Arial Black', sans-serif;
+        }
 
-        <!-- hotel_doubleroom validation start here -->
-        <div class="form-group">
-            <label for="hotel_doubleroom">Double Rooms</label>
-            <input type="number" class="form-control" placeholder="hotel_doubleroom" required name="hotel_doubleroom" #hotel_doubleroom="ngModel" ngModel min="1">
-        </div>
-        <div class="alert alert-danger" *ngIf="hotel_doubleroom.errors?.['required'] && hotel_doubleroom.touched">
-            Double Rooms are required
-        </div>
-        <div class="alert alert-danger" *ngIf="hotel_doubleroom.errors?.['min'] && hotel_doubleroom.touched">
-            Double Rooms must be at least 1
-        </div>
-        <!-- hotel_doubleroom validation end here -->
+        .form-group {
+            position: relative;
+            margin-bottom: 30px;
+        }
 
-        <!-- hotel_address validation start here -->
-        <div class="form-group">
-            <label for="hotel_address">Hotel Address</label>
-            <input type="text" class="form-control" placeholder="hotel_address" required name="hotel_address" #hotel_address="ngModel" ngModel>
-        </div>
-        <div class="alert alert-danger" *ngIf="hotel_address.errors?.['required'] && hotel_address.touched">
-            Hotel Address is required
-        </div>
-        <!-- hotel_address validation end here -->
+        label {
+            position: absolute;
+            top: 10px;
+            left: 40px;
+            color: #aaa;
+            font-size: 14px;
+            transition: 0.3s;
+            pointer-events: none;
+        }
 
-        <!-- hotel_link validation start here -->
-        <div class="form-group">
-            <label for="hotel_link">Hotel Link</label>
-            <input type="text" class="form-control" placeholder="hotel_link" required name="hotel_link" #hotel_link="ngModel" ngModel>
-        </div>
-        <div class="alert alert-danger" *ngIf="hotel_link.errors?.['required'] && hotel_link.touched">
-            Hotel Link is required
-        </div>
-        <!-- hotel_link validation end here -->
+        input {
+            width: 100%;
+            padding: 10px 10px 10px 40px;
+            border: none;
+            border-bottom: 2px solid #ccc;
+            outline: none;
+            font-size: 16px;
+            transition: 0.3s;
+        }
 
-        <button class="btn btn-primary" [disabled]="f.invalid">Add Hotel</button>
-    </form>
-</div>
+        input:focus {
+            border-bottom: 2px solid #3498db;
+        }
 
-<!-- Ajout de la bibliothèque FontAwesome -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+        input:focus + label,
+        input:not(:placeholder-shown) + label {
+            top: -20px;
+            left: 0;
+            font-size: 12px;
+            color: #3498db;
+        }
+
+        .form-group i {
+            position: absolute;
+            left: 10px;
+            top: 14px;
+            color: #3498db;
+        }
+
+        .alert {
+            color: red;
+            font-size: 12px;
+            margin-top: -20px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        button:disabled {
+            background-color: #aaa;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Ajouter un Hôtel</h2>
+        <form #f="ngForm" (ngSubmit)="add(f)">
+            <!-- Hotel Name -->
+            <div class="form-group">
+                <i class="fas fa-building"></i>
+                <input type="text" class="form-control" placeholder="Nom de l'hôtel" required name="hotel_name" #hotel_name="ngModel" ngModel minlength="2" maxlength="50">
+                
+            </div>
+            <div class="alert" *ngIf="hotel_name.errors?.['required'] && hotel_name.touched">
+                Le nom de l'hôtel est requis
+            </div>
+            <div class="alert" *ngIf="hotel_name.errors?.['minlength'] && hotel_name.touched">
+                Le nom de l'hôtel doit contenir au moins 2 caractères
+            </div>
+            <div class="alert" *ngIf="hotel_name.errors?.['maxlength'] && hotel_name.touched">
+                Le nom de l'hôtel doit contenir moins de 50 caractères
+            </div>
+
+            <!-- Hotel Stars -->
+            <div class="form-group">
+                <i class="fas fa-star"></i>
+                <input type="number" class="form-control" placeholder="Étoiles de l'hôtel" required name="hotel_stars" #hotel_stars="ngModel" ngModel min="1" max="5">
+                
+            </div>
+            <div class="alert" *ngIf="hotel_stars.errors?.['required'] && hotel_stars.touched">
+                Les étoiles de l'hôtel sont requises
+            </div>
+            <div class="alert" *ngIf="hotel_stars.errors?.['min'] && hotel_stars.touched">
+                Les étoiles de l'hôtel doivent être au moins 1
+            </div>
+            <div class="alert" *ngIf="hotel_stars.errors?.['max'] && hotel_stars.touched">
+                Les étoiles de l'hôtel doivent être au maximum 5
+            </div>
+
+            <!-- Single Rooms -->
+            <div class="form-group">
+                <i class="fas fa-bed"></i>
+                <input type="number" class="form-control" placeholder="Chambres simples" required name="hotel_singleroom" #hotel_singleroom="ngModel" ngModel min="1">
+               
+            </div>
+            <div class="alert" *ngIf="hotel_singleroom.errors?.['required'] && hotel_singleroom.touched">
+                Les chambres simples sont requises
+            </div>
+            <div class="alert" *ngIf="hotel_singleroom.errors?.['min'] && hotel_singleroom.touched">
+                Les chambres simples doivent être au moins 1
+            </div>
+
+            <!-- Double Rooms -->
+            <div class="form-group">
+                <i class="fas fa-bed"></i>
+                <input type="number" class="form-control" placeholder="Chambres doubles" required name="hotel_doubleroom" #hotel_doubleroom="ngModel" ngModel min="1">
+               
+            </div>
+            <div class="alert" *ngIf="hotel_doubleroom.errors?.['required'] && hotel_doubleroom.touched">
+                Les chambres doubles sont requises
+            </div>
+            <div class="alert" *ngIf="hotel_doubleroom.errors?.['min'] && hotel_doubleroom.touched">
+                Les chambres doubles doivent être au moins 1
+            </div>
+
+            <!-- Hotel Address -->
+            <div class="form-group">
+                <i class="fas fa-map-marker-alt"></i>
+                <input type="text" class="form-control" placeholder="Adresse de l'hôtel" required name="hotel_address" #hotel_address="ngModel" ngModel>
+                
+            </div>
+            <div class="alert" *ngIf="hotel_address.errors?.['required'] && hotel_address.touched">
+                L'adresse de l'hôtel est requise
+            </div>
+
+            <!-- Hotel Link -->
+            <div class="form-group">
+                <i class="fas fa-link"></i>
+                <input type="text" class="form-control" placeholder="URL de l'hôtel" required name="hotel_link" #hotel_link="ngModel" ngModel>
+                
+            </div>
+            <div class="alert" *ngIf="hotel_link.errors?.['required'] && hotel_link.touched">
+                L'URL de l'hôtel est requise
+            </div>
+
+            <button class="btn btn-primary" [disabled]="f.invalid">Ajouter un Hôtel</button>
+        </form>
+    </div>
+
+    <!-- Ajout de la bibliothèque FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</body>
+</html>

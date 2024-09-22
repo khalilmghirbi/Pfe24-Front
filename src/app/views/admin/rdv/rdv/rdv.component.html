@@ -1,43 +1,29 @@
-<!-- Begin Page Content -->
-<div class="container-fluid">
-
-    <!-- Page Heading -->
-    <h1 class="h3 mb-2 text-gray-800">Liste of rendez-vous</h1>
-
-    <!-- DataTales Example -->
-    <!-- Utilisation du conteneur flexbox pour aligner le titre et le bouton sur la même ligne -->
-    <div class="card shadow mb-4">
-        <div class="card-header py-3 d-flex justify-content-between align-items-center"> <!-- Changement effectué ici -->
-            <h6 class="m-0 font-weight-bold text-primary">Liste of rendez-vous</h6>
-           <!-- <a routerLink="/admin/addhotel" class="btn btn-primary">Add hotel</a>-->
-        </div>
-        <div class="card-body">
-            <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                    <thead>
-                        <tr>
-                           <!-- <th>id</th> -->
-                            <th>rdv_id</th>
-                            <th>rdv_datetime</th> 
-                            <th>hospital</th> 
-                           
-                            
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let item of dataArray;index as i">
-                            <!--<td>{{item.hopitalmanager_id}}</td>-->
-                            <td>{{item.rdv_id}}</td>
-                            <td>{{item.rdv_datetime}}</td>
-                            <td>{{item.hopital_id}}</td>
-                            
-                            
-                        </tr>                                           
-                    </tbody>
-                </table>
-            </div>
-        </div>
+<div class="appointments-container">
+  <div class="appointment-card" *ngFor="let appointment of dataArray">
+    <div class="appointment-header">
+      <span>{{ appointment.hopital_name }}</span>
+      <span class="appointment-dueDate header-info">{{
+        appointment.rdv_datetime | date : "medium"
+        }}</span>
+      <span class="appointment-status header-info" [ngClass]="getStatusClassName(appointment.rdv_confirmed)">
+        {{ getStatus(appointment.rdv_confirmed) }}</span>
     </div>
-
+    <div class="appointment-body">
+      <div>
+        <span class="appointment-paid">
+          <span class="material-symbols-outlined" style="font-size: 48px;"> calendar_month </span>
+          <span>Advanced Payments:</span>
+          <span>{{ appointment.rdv_paid | currency }}</span>
+        </span>
+      </div>
+      <span>Hotel: <a class="hopitalName">{{ appointment.rdv_nomhotel }}</a></span>
+    </div>
+    <div class="appointment-action">
+      <button class="greyed-btn">Payment</button>
+      <button class="greyed-btn">Cancel</button>
+    </div>
+    <div class="appointment-action">
+      <button  [ngClass]="getConfirmClass(appointment.rdv_confirmed)" >Confirm or cancel it</button>
+    </div>
+  </div>
 </div>
-<!-- /.container-fluid -->

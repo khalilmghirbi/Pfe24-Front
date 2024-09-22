@@ -44,8 +44,15 @@ export class AdminLayoutComponent implements OnInit {
     onClinicSelect(clinic: any): void {
       this.selectedHospitalService.setSelectedClinic(clinic);
       console.log('Selected clinic:', clinic);
-      this.route.navigate(['/admin/clinics']);
+      this.route.navigate(['admin/clinics',clinic.hopital_id]);
+      //this.route.navigate(['/admin/clinics/profile']);
     }
+      /*
+      onClinicSelect(clinic: any): void {
+        this.selectedHospitalService.setSelectedClinic(clinic);
+        console.log('Selected clinic:', clinic);
+        this.route.navigate(['/admin/clinics/profile', clinic.hopital_id]); // Pass the hospital ID in the route
+      }*/
 
   logout(){
     localStorage.removeItem('username')

@@ -1,9 +1,10 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DataService } from 'src/app/views/services/data.service';HopitalManager
 import { HopitalManager } from 'src/app/models/Manager';
 import { SelectedHospitalService } from 'src/app/views/services/selected-hospital.service';
+import { map, switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-case-managers',
@@ -28,23 +29,52 @@ export class CaseManagersComponent implements OnInit {
   selectedHospital:any;
 
 
-  constructor(private selectedHospitalService:SelectedHospitalService,private ds:DataService ,private route:Router) { 
+  constructor(private selectedHospitalService:SelectedHospitalService,
+    private ds:DataService ,private route:Router, private activatedRoute:ActivatedRoute) { 
     //this.ds.getAllmanagers().subscribe(data=>this.dataArray=data)
   }
 
   ngOnInit(): void {
-    this.selectedHospital=this.selectedHospitalService.getSelectedClinic();
-    console.log('hadha el id : ',this.selectedHospital.hopital_id)
-    this.ds.getAllmanagers().subscribe(
+    this.activatedRoute.parent?.paramMap.pipe(
+      map(params => params.get('id')),
+      switchMap((id) => this.ds.getHospitalsById(id))
+   ).subscribe(
+     (data: any[]) => {
+       this.selectedHospital = data[0];
+       console.log("Données reçues amine : ", this.selectedHospital);
+     },
+     (error) => {
+       console.error('Erreur lors de la récupération des informations de l\'hôpital :', error);
+     }
+   )
+    // this.selectedHospital=this.selectedHospitalService.getSelectedClinic();
+    // console.log('hadha el id : ',this.selectedHospital.hopital_id)
+    // this.ds.getManagersByHopitalId(this.selectedHospital.hopital_id).subscribe(
+    //   (data: HopitalManager[])=>{
+    //     console.log("hadhi il data lkollllllllll,",data)
+    //     this.dataArray = data
+    //     //.filter((manager) => manager.hopital_id === this.selectedHospital.hopital_id);
+    //     console.log("this is all the case-managers received",data)
+    //   },
+    //   (error) => {
+    //     console.error('Error fetching case-managers:', error);
+    //   }
+    
+    // )
+
+        this.activatedRoute.parent?.paramMap.pipe(
+       map(params => params.get('id')),
+       switchMap((id) => this.ds.getManagersByHopitalId(id))
+    ).subscribe(
       (data: HopitalManager[])=>{
         console.log("hadhi il data lkollllllllll,",data)
-        this.dataArray = data.filter((manager) => manager.hopital_id === this.selectedHospital.hopital_id);
+        this.dataArray = data
+        //.filter((manager) => manager.hopital_id === this.selectedHospital.hopital_id);
         console.log("this is all the case-managers received",data)
       },
       (error) => {
         console.error('Error fetching case-managers:', error);
       }
-    
     )
   }
 

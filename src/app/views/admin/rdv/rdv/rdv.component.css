@@ -1,0 +1,142 @@
+.appointments-container{
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  gap: 5px;
+  margin: 5px;
+}
+
+/* Common colors and sizes */
+.appointment-card {
+  background: #fff;
+  border-radius: 2px;
+  padding: 1rem;
+  box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 18px;
+  margin: 5px;
+}
+
+/* Common styles for status and due date elements */
+.appointment-dueDate,
+.appointment-status {
+  border: 1px solid rgba(27, 31, 35, .15);
+  border-radius: 6px;
+  box-shadow: rgba(27, 31, 35, 0.1) 0 1px 0;
+  color: #fff;
+  cursor: none;
+}
+
+/* Specific styles for due date and status elements */
+.appointment-dueDate {
+  background-color: #2ea44f;
+}
+
+.appointment-status-Declined {
+  background-color: #d12a2a;
+}
+
+.appointment-status-waiting {
+  background-color: #d1592a;
+}
+
+.appointment-status-accpected {
+  background-color: blue;
+}
+
+/* Header info styles */
+.header-info {
+  font-weight: 600;
+  line-height: 20px;
+  padding: 6px 16px;
+  text-align: center;
+  text-decoration: none;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+/* Header and body container styles */
+.appointment-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.appointment-header > * {
+  margin: 5px;
+}
+
+.appointment-body {
+  display: flex;
+  flex-direction: row;
+}
+
+.appointment-body > * {
+  flex: 1;
+}
+
+/* Styles for paid section */
+.appointment-paid {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 50%;
+  box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+  text-align: center;
+}
+
+.appointment-paid > * {
+  padding: 0.5rem;
+}
+
+/* Action button container styles */
+.appointment-action {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Styling for paid span and hospital name */
+.appointment-paid span:last-child {
+  color: rgb(0, 157, 255);
+  font-weight: 700;
+}
+
+.hopitalName {
+  color: rgb(0, 157, 255);
+  font-weight: 700;
+}
+
+/* Button styles */
+.greyed-btn,
+.confirm-btn {
+  font-size: 15px;
+  padding: 0.5rem;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  margin: 5px;
+}
+
+.greyed-btn {
+  background-color: grey;
+}
+
+.confirm-btn {
+  background-color: #d12a2a;
+  width: 50%;
+  padding: 10px 0;
+}
+
+.confirm-btn-disabled {
+  background-color: grey;
+  width: 50%;
+  padding: 10px 0;
+  color: #fff;
+  border: none;
+  display:  none;
+}

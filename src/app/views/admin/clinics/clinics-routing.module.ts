@@ -11,9 +11,14 @@ import { DoctorsComponent } from './clinics/doctors/doctors.component';
 import { HotelsComponent } from './clinics/hotels/hotels.component';
 
 const routes: Routes = [
-  { path:'',
+  { path:':id',
     component:ClinicsComponent,
     children:[
+      {
+        path: '', // Default child route
+        redirectTo: 'profile',
+        pathMatch: 'full'
+      },
       {
         path:'profile',
         component:ClinicProfileComponent

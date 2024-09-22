@@ -26,8 +26,12 @@
                             <td>{{ item.hopitalmedecins_fullname }}</td>
                             <td>{{ item.procedure_name }}</td>
                             <td>
-                                <button class="btn btn-success" (click)="getdata(item.hopitalmedecins_fullname,item.hopitalmedecins_phone,item.hopitalmedecins_description,item.hopitalmedecins_photo,item.hopitalmedecins_langs,item.hopitalmedecins_cvfile,item.hopitalmedecins_id)" data-toggle="modal" data-target="#exampleModal"  >
-                                    <i class="fas fa-edit"></i>
+                              <!--  <button class="btn btn-success" (click)="getdata(item.hopitalmedecins_fullname,item.hopitalmedecins_phone,item.hopitalmedecins_description,item.hopitalmedecins_photo,item.hopitalmedecins_langs,item.hopitalmedecins_cvfile,item.hopitalmedecins_id)" data-toggle="modal" data-target="#exampleModal"  >
+                                    <i class="fas fa-edit"></i>-->
+                                    <button class="btn btn-success" (click)="getdata(item.hopitalmedecins_fullname,item.hopitalmedecins_phone,item.hopitalmedecins_description,
+                                    item.hopitalmedecins_photo,item.hopitalmedecins_langs,item.hopitalmedecins_cvfile,
+                                    item.procedure_name,item.hopitalmedecins_id)" data-toggle="modal" data-target="#exampleModal"  >
+                                        <i class="fas fa-edit"></i>
                                 </button>
                                 <button class="btn btn-danger" (click)="delete(item.hopitalmedecins_id, i)">
                                     <i class="fas fa-trash-alt"></i>
@@ -61,10 +65,11 @@
                 <form #f="ngForm" (ngSubmit)="updatenewdoctor(f)">
                     <!-- Full Name -->
                     <div class="form-group">
-                        <label for="hopitalmedecins_fullname">Full Name</label>
+                        <i class="fas fa-user"></i>
                         <input type="text" class="form-control" placeholder="Full Name"
                             [(ngModel)]="dataMedecin.hopitalmedecins_fullname" required
                             name="hopitalmedecins_fullname" #fullname="ngModel">
+                        <label for="hopitalmedecins_fullname">Full Name</label>
                         <div class="alert alert-danger" *ngIf="fullname.errors?.['required'] && fullname.touched">
                             Full Name is required
                         </div>
@@ -72,51 +77,58 @@
 
                     <!-- Phone -->
                     <div class="form-group">
-                        <label for="hopitalmedecins_phone">Phone</label>
+                        <i class="fas fa-phone"></i>
                         <input type="text" class="form-control" placeholder="Phone"
                             [(ngModel)]="dataMedecin.hopitalmedecins_phone" name="hopitalmedecins_phone">
+                        <label for="hopitalmedecins_phone">Phone</label>
                     </div>
 
                     <!-- Description -->
                     <div class="form-group">
-                        <label for="hopitalmedecins_description">Description</label>
+                        <i class="fas fa-file-alt"></i>
                         <textarea class="form-control" placeholder="Description"
                             [(ngModel)]="dataMedecin.hopitalmedecins_description" name="hopitalmedecins_description"></textarea>
+                        <label for="hopitalmedecins_description">Description</label>
                     </div>
 
                     <!-- Photo -->
                     <div class="form-group">
-                        <label for="hopitalmedecins_photo">Photo</label>
+                        <i class="fas fa-image"></i>
                         <input type="text" class="form-control" placeholder="Photo"
                             [(ngModel)]="dataMedecin.hopitalmedecins_photo" name="hopitalmedecins_photo">
+                        <label for="hopitalmedecins_photo">Photo</label>
                     </div>
 
                     <!-- Languages -->
                     <div class="form-group">
-                        <label for="hopitalmedecins_langs">Languages</label>
+                        <i class="fas fa-language"></i>
                         <input type="text" class="form-control" placeholder="Languages"
                             [(ngModel)]="dataMedecin.hopitalmedecins_langs" name="hopitalmedecins_langs">
+                        <label for="hopitalmedecins_langs">Languages</label>
                     </div>
 
                     <!-- Status -->
                     <div class="form-group">
-                        <label for="hopitalmedecins_status">Status</label>
+                        <i class="fas fa-info-circle"></i>
                         <input type="number" class="form-control" placeholder="Status"
                             [(ngModel)]="dataMedecin.hopitalmedecins_status" name="hopitalmedecins_status">
+                        <label for="hopitalmedecins_status">Status</label>
                     </div>
 
                     <!-- CV File -->
                     <div class="form-group">
-                        <label for="hopitalmedecins_cvfile">CV File</label>
+                        <i class="fas fa-file"></i>
                         <input type="text" class="form-control" placeholder="CV File"
                             [(ngModel)]="dataMedecin.hopitalmedecins_cvfile" name="hopitalmedecins_cvfile">
+                        <label for="hopitalmedecins_cvfile">CV File</label>
                     </div>
 
                     <!-- Procedure Name -->
                     <div class="form-group">
-                        <label for="procedure_name">Procedure Name</label>
+                        <i class="fas fa-cogs"></i>
                         <input type="text" class="form-control" placeholder="Procedure Name"
                             [(ngModel)]="dataMedecin.procedure_name" name="procedure_name">
+                        <label for="procedure_name">Procedure Name</label>
                     </div>
 
                     <!-- Success Message -->
@@ -137,4 +149,125 @@
         </div>
     </div>
 </div>
+
+<!-- Ajout de la bibliothèque FontAwesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+<!-- Style for Modal -->
+<style>
+    .modal-content {
+        border-radius: 10px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        max-width: 600px;
+        width: 100%;
+    }
+
+    .modal-header {
+        background: #3498db;
+        color: white;
+        border-bottom: none;
+    }
+
+    .modal-title {
+        font-family: 'Arial Black', sans-serif;
+    }
+
+    .close {
+        color: white;
+        opacity: 1;
+    }
+
+    .modal-body {
+        background-color: #f9f9f9;
+        padding: 30px;
+    }
+
+    .form-group {
+        position: relative;
+        margin-bottom: 20px;
+    }
+
+    .form-group i {
+        position: absolute;
+        left: 10px;
+        top: 14px;
+        color: #3498db;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 10px 10px 10px 40px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 16px;
+        transition: border-color 0.3s;
+    }
+
+    .form-control:focus {
+        border-color: #3498db;
+        outline: none;
+    }
+
+    .form-group label {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        color: #aaa;
+        font-size: 14px;
+        transition: 0.3s;
+        pointer-events: none;
+    }
+
+    .form-control:focus + label,
+    .form-control:not(:placeholder-shown) + label {
+        top: -20px;
+        left: 0;
+        font-size: 12px;
+        color: #3498db;
+    }
+
+    .alert {
+        font-size: 12px;
+        margin-top: 5px;
+    }
+
+    .alert-danger {
+        color: red;
+    }
+
+    .alert-success {
+        color: green;
+    }
+
+    .btn-primary {
+        background-color: #3498db;
+        border: none;
+        border-radius: 5px;
+        color: white;
+        font-size: 16px;
+        padding: 10px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .btn-primary:hover {
+        background-color: #2980b9;
+    }
+
+    .btn-primary:disabled {
+        background-color: #aaa;
+        cursor: not-allowed;
+    }
+
+    .btn-secondary {
+        background-color: #aaa;
+        border: none;
+        border-radius: 5px;
+        color: white;
+        font-size: 16px;
+        padding: 10px;
+        cursor: pointer;
+    }
+</style>
+
 

@@ -10,7 +10,7 @@
     <div class="card shadow mb-4">
         <div class="card-header py-3 d-flex justify-content-between align-items-center"> <!-- Changement effectué ici -->
             <h6 class="m-0 font-weight-bold text-primary">Liste Des Hotels</h6>
-            <a routerLink="/admin/addhotel" class="btn btn-primary">Add hotel</a>
+            <a routerLink="/admin/addhotel" class="btn btn-primary">+Hotel</a>
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -51,107 +51,220 @@
 <!-- MODAL -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <!-- form update start here -->
-          <form  #f="ngForm" (ngSubmit)="updatenewhotel(f)">
-            <!-- hotel_name validation start here -->
-            <div class="form-group">
-                <label for="hotel_name">Hotel Name</label>
-                <input type="text" class="form-control" placeholder="hotel_name" [(ngModel)]="dataHotel.hotel_name" required name="hotel_name" #hotel_name="ngModel" ngModel minlength="2" maxlength="20">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Update un Hôtel</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
-            <div class="alert alert-danger" *ngIf="hotel_name.errors?.['required'] && hotel_name.touched">
-                Hotel Name is required
-            </div>
-            <div class="alert alert-danger" *ngIf="hotel_name.errors?.['minlength'] && hotel_name.touched">
-                Hotel Name must be at least 2 characters
-            </div>
-            <!-- hotel_name validation end here -->
-    
-            <!-- hotel_stars validation start here -->
-            <div class="form-group">
-                <label for="hotel_stars">Hotel Stars</label>
-                <input type="number" class="form-control" placeholder="hotel_stars" [(ngModel)]="dataHotel.hotel_stars" required name="hotel_stars" #hotel_stars="ngModel" ngModel min="1" max="5">
-            </div>
-            <div class="alert alert-danger" *ngIf="hotel_stars.errors?.['required'] && hotel_stars.touched">
-                Hotel Stars is required
-            </div>
-            <div class="alert alert-danger" *ngIf="hotel_stars.errors?.['min'] && hotel_stars.touched">
-                Hotel Stars must be at least 1
-            </div>
-            <div class="alert alert-danger" *ngIf="hotel_stars.errors?.['max'] && hotel_stars.touched">
-                Hotel Stars must be at most 5
-            </div>
-            <!-- hotel_stars validation end here -->
-    
-            <!-- hotel_singleroom validation start here -->
-            <div class="form-group">
-                <label for="hotel_singleroom">Single Rooms</label>
-                <input type="number" class="form-control" placeholder="hotel_singleroom" [(ngModel)]="dataHotel.hotel_singleroom" required name="hotel_singleroom" #hotel_singleroom="ngModel" ngModel min="1">
-            </div>
-            <div class="alert alert-danger" *ngIf="hotel_singleroom.errors?.['required'] && hotel_singleroom.touched">
-                Single Rooms are required
-            </div>
-            <div class="alert alert-danger" *ngIf="hotel_singleroom.errors?.['min'] && hotel_singleroom.touched">
-                Single Rooms must be at least 1
-            </div>
-            <!-- hotel_singleroom validation end here -->
-    
-            <!-- hotel_doubleroom validation start here -->
-            <div class="form-group">
-                <label for="hotel_doubleroom">Double Rooms</label>
-                <input type="number" class="form-control" placeholder="hotel_doubleroom" [(ngModel)]="dataHotel.hotel_doubleroom" required name="hotel_doubleroom" #hotel_doubleroom="ngModel" ngModel min="1">
-            </div>
-            <div class="alert alert-danger" *ngIf="hotel_doubleroom.errors?.['required'] && hotel_doubleroom.touched">
-                Double Rooms are required
-            </div>
-            <div class="alert alert-danger" *ngIf="hotel_doubleroom.errors?.['min'] && hotel_doubleroom.touched">
-                Double Rooms must be at least 1
-            </div>
-            <!-- hotel_doubleroom validation end here -->
-    
-            <!-- hotel_address validation start here -->
-            <div class="form-group">
-                <label for="hotel_address">Hotel Address</label>
-                <input type="text" class="form-control" placeholder="hotel_address" [(ngModel)]="dataHotel.hotel_address" required name="hotel_address" #hotel_address="ngModel" ngModel>
-            </div>
-            <div class="alert alert-danger" *ngIf="hotel_address.errors?.['required'] && hotel_address.touched">
-                Hotel Address is required
-            </div>
-            <!-- hotel_address validation end here -->
-    
-            <!-- hotel_link validation start here -->
-            <div class="form-group">
-                <label for="hotel_link">Hotel Link</label>
-                <input type="text" class="form-control" placeholder="hotel_link" [(ngModel)]="dataHotel.hotel_link" required name="hotel_link" #hotel_link="ngModel" ngModel>
-            </div>
-            <div class="alert alert-danger" *ngIf="hotel_link.errors?.['required'] && hotel_link.touched">
-                Hotel Link is required
-            </div>
-            <!-- hotel_link validation end here -->
-    
-            <div class="alert alert-success" *ngIf="messageSuccess">
-                {{messageSuccess}}
-            </div>      
+            <div class="modal-body">
+                <!-- form update start here -->
+                <form #f="ngForm" (ngSubmit)="updatenewhotel(f)">
+                    <!-- hotel_name validation start here -->
+                    <div class="form-group">
+                        <i class="fas fa-hotel"></i>
+                        <input type="text" class="form-control" placeholder="Nom de l'Hôtel" [(ngModel)]="dataHotel.hotel_name" required name="hotel_name" #hotel_name="ngModel" minlength="2" maxlength="20">
+                        <label for="hotel_name">Nom de l'Hôtel</label>
+                    </div>
+                    <div class="alert" *ngIf="hotel_name.errors?.['required'] && hotel_name.touched">
+                        Le nom de l'hôtel est requis
+                    </div>
+                    <div class="alert" *ngIf="hotel_name.errors?.['minlength'] && hotel_name.touched">
+                        Le nom de l'hôtel doit contenir au moins 2 caractères
+                    </div>
 
-           <button class="btn btn-primary" [disabled]="f.invalid">Update Hotel</button>
-          
-        </form>
+                    <!-- hotel_stars validation start here -->
+                    <div class="form-group">
+                        <i class="fas fa-star"></i>
+                        <input type="number" class="form-control" placeholder="Étoiles de l'Hôtel" [(ngModel)]="dataHotel.hotel_stars" required name="hotel_stars" #hotel_stars="ngModel" min="1" max="5">
+                        <label for="hotel_stars">Étoiles de l'Hôtel</label>
+                    </div>
+                    <div class="alert" *ngIf="hotel_stars.errors?.['required'] && hotel_stars.touched">
+                        Les étoiles de l'hôtel sont requises
+                    </div>
+                    <div class="alert" *ngIf="hotel_stars.errors?.['min'] && hotel_stars.touched">
+                        Les étoiles de l'hôtel doivent être au moins 1
+                    </div>
+                    <div class="alert" *ngIf="hotel_stars.errors?.['max'] && hotel_stars.touched">
+                        Les étoiles de l'hôtel doivent être au maximum 5
+                    </div>
 
-          <!-- form update end here -->
+                    <!-- hotel_singleroom validation start here -->
+                    <div class="form-group">
+                        <i class="fas fa-bed"></i>
+                        <input type="number" class="form-control" placeholder="Chambres Simples" [(ngModel)]="dataHotel.hotel_singleroom" required name="hotel_singleroom" #hotel_singleroom="ngModel" min="1">
+                        <label for="hotel_singleroom">Chambres Simples</label>
+                    </div>
+                    <div class="alert" *ngIf="hotel_singleroom.errors?.['required'] && hotel_singleroom.touched">
+                        Les chambres simples sont requises
+                    </div>
+                    <div class="alert" *ngIf="hotel_singleroom.errors?.['min'] && hotel_singleroom.touched">
+                        Les chambres simples doivent être au moins 1
+                    </div>
+
+                    <!-- hotel_doubleroom validation start here -->
+                    <div class="form-group">
+                        <i class="fas fa-bed"></i>
+                        <input type="number" class="form-control" placeholder="Chambres Doubles" [(ngModel)]="dataHotel.hotel_doubleroom" required name="hotel_doubleroom" #hotel_doubleroom="ngModel" min="1">
+                        <label for="hotel_doubleroom">Chambres Doubles</label>
+                    </div>
+                    <div class="alert" *ngIf="hotel_doubleroom.errors?.['required'] && hotel_doubleroom.touched">
+                        Les chambres doubles sont requises
+                    </div>
+                    <div class="alert" *ngIf="hotel_doubleroom.errors?.['min'] && hotel_doubleroom.touched">
+                        Les chambres doubles doivent être au moins 1
+                    </div>
+
+                    <!-- hotel_address validation start here -->
+                    <div class="form-group">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <input type="text" class="form-control" placeholder="Adresse de l'Hôtel" [(ngModel)]="dataHotel.hotel_address" required name="hotel_address" #hotel_address="ngModel">
+                        <label for="hotel_address">Adresse de l'Hôtel</label>
+                    </div>
+                    <div class="alert" *ngIf="hotel_address.errors?.['required'] && hotel_address.touched">
+                        L'adresse de l'hôtel est requise
+                    </div>
+
+                    <!-- hotel_link validation start here -->
+                    <div class="form-group">
+                        <i class="fas fa-link"></i>
+                        <input type="text" class="form-control" placeholder="Lien de l'Hôtel" [(ngModel)]="dataHotel.hotel_link" required name="hotel_link" #hotel_link="ngModel">
+                        <label for="hotel_link">Lien de l'Hôtel</label>
+                    </div>
+                    <div class="alert" *ngIf="hotel_link.errors?.['required'] && hotel_link.touched">
+                        Le lien de l'hôtel est requis
+                    </div>
+
+                    <div class="alert alert-success" *ngIf="messageSuccess">
+                        {{messageSuccess}}
+                    </div>      
+
+                    <button class="btn btn-primary" [disabled]="f.invalid">Mettre à jour l'Hôtel</button>
+                </form>
+                <!-- form update end here -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+            </div>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        </div>
-      </div>
     </div>
-  </div>
-  
+</div>
 
+<!-- Style for Modal -->
+<style>
+    .modal-content {
+        border-radius: 10px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        max-width: 600px;
+        width: 100%;
+    }
+
+    .modal-header {
+        background: #3498db;
+        color: white;
+        border-bottom: none;
+    }
+
+    .modal-title {
+        font-family: 'Arial Black', sans-serif;
+    }
+
+    .close {
+        color: white;
+        opacity: 1;
+    }
+
+    .modal-body {
+        background-color: #f9f9f9;
+        padding: 30px;
+    }
+
+    .form-group {
+        position: relative;
+        margin-bottom: 20px;
+    }
+
+    .form-group i {
+        position: absolute;
+        left: 10px;
+        top: 14px;
+        color: #3498db;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 10px 10px 10px 40px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 16px;
+        transition: border-color 0.3s;
+    }
+
+    .form-control:focus {
+        border-color: #3498db;
+        outline: none;
+    }
+
+    .form-group label {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        color: #aaa;
+        font-size: 14px;
+        transition: 0.3s;
+        pointer-events: none;
+    }
+
+    .form-control:focus + label,
+    .form-control:not(:placeholder-shown) + label {
+        top: -20px;
+        left: 0;
+        font-size: 12px;
+        color: #3498db;
+    }
+
+    .alert {
+        font-size: 12px;
+        margin-top: 5px;
+    }
+
+    .alert-danger {
+        color: red;
+    }
+
+    .alert-success {
+        color: green;
+    }
+
+    .btn-primary {
+        background-color: #3498db;
+        border: none;
+        border-radius: 5px;
+        color: white;
+        font-size: 16px;
+        padding: 10px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .btn-primary:hover {
+        background-color: #2980b9;
+    }
+
+    .btn-primary:disabled {
+        background-color: #aaa;
+        cursor: not-allowed;
+    }
+
+    .btn-secondary {
+        background-color: #aaa;
+        border: none;
+        border-radius: 5px;
+        color: white;
+        font-size: 16px;
+        padding: 10px;
+        cursor: pointer;
+    }
+</style>
 

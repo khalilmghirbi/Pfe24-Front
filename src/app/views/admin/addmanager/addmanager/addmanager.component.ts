@@ -18,8 +18,8 @@ export class AddmanagerComponent implements OnInit {
     let data=f.value
     console.log(data)
     //this.ds.addHotel(data).subscribe(data=>console.log(data))
-    this.ds.addManager(data).subscribe(data=>{
-      this.route.navigate(['/admin/managers'])
+    this.ds.addManager(data).subscribe((data:any)=>{
+      this.route.navigate(['/admin/clinics',data.hopital_id,'caseManagers'])
     })
   }
 }

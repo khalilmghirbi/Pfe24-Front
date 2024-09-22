@@ -1,60 +1,167 @@
-<div class="container">
-    <form #f="ngForm" (ngSubmit)="add(f)">
-        <!-- hopitalmanager_fullname validation start here -->
-        <div class="form-group">
-            <label for="hopitalmanager_fullname">Full Name</label>
-            <input type="text" class="form-control" placeholder="Full Name" required name="hopitalmanager_fullname" #hopitalmanager_fullname="ngModel" ngModel>
-        </div>
-        <div class="alert alert-danger" *ngIf="hopitalmanager_fullname.errors?.['required'] && hopitalmanager_fullname.touched">
-            Full Name is required
-        </div>
-        <!-- hopitalmanager_fullname validation end here -->
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajouter un Manager</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(120deg, #3498db, #8e44ad);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+        }
 
-        <!-- hopitalmanager_phone validation start here -->
-        <div class="form-group">
-            <label for="hopitalmanager_phone">Phone</label>
-            <input type="text" class="form-control" placeholder="Phone" name="hopitalmanager_phone" #hopitalmanager_phone="ngModel" ngModel>
-        </div>
-        <!-- hopitalmanager_phone validation end here -->
+        .container {
+            background-color: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            max-width: 500px;
+            width: 100%;
+        }
 
-        <!-- hopitalmanager_email validation start here -->
-        <div class="form-group">
-            <label for="hopitalmanager_email">Email</label>
-            <input type="email" class="form-control" placeholder="Email" name="hopitalmanager_email" #hopitalmanager_email="ngModel" ngModel>
-        </div>
-        <!-- hopitalmanager_email validation end here -->
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+            font-family: 'Arial Black', sans-serif;
+        }
 
-        <!-- hopitalmanager_photo validation start here -->
-        <div class="form-group">
-            <label for="hopitalmanager_photo">Photo</label>
-            <input type="text" class="form-control" placeholder="Photo URL" name="hopitalmanager_photo" #hopitalmanager_photo="ngModel" ngModel>
-        </div>
-        <!-- hopitalmanager_photo validation end here -->
+        .form-group {
+            position: relative;
+            margin-bottom: 30px;
+        }
 
-         <!-- hopital_id validation start here -->
-         <div class="form-group">
-            <label for="hopital_id">Hospital ID</label>
-            <input type="number" class="form-control" placeholder="Hospital ID" required name="hopital_id" #hopital_id="ngModel" ngModel min="1">
-        </div>
-        <div class="alert alert-danger" *ngIf="hopital_id.errors?.['required'] && hopital_id.touched">
-            Hospital ID is required
-        </div>
-        <div class="alert alert-danger" *ngIf="hopital_id.errors?.['min'] && hopital_id.touched">
-            Hospital ID must be at least 1
-        </div>
-        <!-- hopital_id validation end here -->
+        label {
+            position: absolute;
+            top: 10px;
+            left: 40px;
+            color: #aaa;
+            font-size: 14px;
+            transition: 0.3s;
+            pointer-events: none;
+        }
 
-        <!-- hopitalmanager_countries validation start here -->
-        <div class="form-group">
-            <label for="hopitalmanager_countries">Countries</label>
-            <input type="text" class="form-control" placeholder="Countries" name="hopitalmanager_countries" #hopitalmanager_countries="ngModel" ngModel>
-        </div>
-        <!-- hopitalmanager_countries validation end here -->
+        input {
+            width: 100%;
+            padding: 10px 10px 10px 40px;
+            border: none;
+            border-bottom: 2px solid #ccc;
+            outline: none;
+            font-size: 16px;
+            transition: 0.3s;
+        }
 
-        <button class="btn btn-primary" [disabled]="f.invalid">Add Manager</button>
-    </form>
-</div>
+        input:focus {
+            border-bottom: 2px solid #3498db;
+        }
 
-<!-- Ajout de la bibliothèque FontAwesome -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+        input:focus + label,
+        input:not(:placeholder-shown) + label {
+            top: -20px;
+            left: 10px;
+            font-size: 12px;
+            color: #3498db;
+        }
 
+        .form-group i {
+            position: absolute;
+            left: 10px;
+            top: 14px;
+            color: #3498db;
+        }
+
+        .alert {
+            color: red;
+            font-size: 12px;
+            margin-top: -20px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        button:disabled {
+            background-color: #aaa;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Ajouter un Manager</h2>
+        <form #f="ngForm" (ngSubmit)="add(f)">
+            <!-- Full Name -->
+            <div class="form-group">
+                <i class="fas fa-user"></i>
+                <input type="text" placeholder="Nom complet" required name="hopitalmanager_fullname" #fullname="ngModel" ngModel minlength="2" maxlength="50">
+            </div>
+            <div class="alert" *ngIf="fullname.errors?.['required'] && fullname.touched">
+                Le nom est requis
+            </div>
+            <div class="alert" *ngIf="fullname.errors?.['minlength'] && fullname.touched">
+                Le nom doit contenir au moins 2 caractères
+            </div>
+            <div class="alert" *ngIf="fullname.errors?.['maxlength'] && fullname.touched">
+                Le nom doit contenir moins de 50 caractères
+            </div>
+
+            <!-- Hopital ID -->
+            <div class="form-group">
+                <i class="fas fa-hospital"></i>
+                <input type="number" placeholder="Hopital ID" required name="hopital_id" #hopital_id="ngModel" ngModel min="1">
+            </div>
+            <div class="alert" *ngIf="hopital_id.errors?.['required'] && hopital_id.touched">
+                L'ID de l'hopital est requis
+            </div>
+            <div class="alert" *ngIf="hopital_id.errors?.['min'] && hopital_id.touched">
+                L'ID doit être supérieur à 0
+            </div>
+
+            <!-- Phone -->
+            <div class="form-group">
+                <i class="fas fa-phone"></i>
+                <input type="text" placeholder="Téléphone" name="hopitalmanager_phone" #phone="ngModel" ngModel>
+            </div>
+
+            <!-- Email -->
+            <div class="form-group">
+                <i class="fas fa-envelope"></i>
+                <input type="email" placeholder="Email" name="hopitalmanager_email" #email="ngModel" ngModel>
+            </div>
+
+            <!-- Photo URL -->
+            <div class="form-group">
+                <i class="fas fa-camera"></i>
+                <input type="text" placeholder="URL de la photo" name="hopitalmanager_photo" #photo="ngModel" ngModel>
+            </div>
+
+            <!-- Countries -->
+            <div class="form-group">
+                <i class="fas fa-globe"></i>
+                <input type="text" placeholder="Pays" name="hopitalmanager_countries" #countries="ngModel" ngModel>
+            </div>
+
+            <button class="btn btn-primary" [disabled]="f.invalid">Ajouter un Manager</button>
+        </form>
+    </div>
+
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</body>
+</html>

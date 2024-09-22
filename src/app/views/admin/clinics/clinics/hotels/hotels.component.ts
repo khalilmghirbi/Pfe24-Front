@@ -1,9 +1,10 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DataService } from 'src/app/views/services/data.service';
 import { SelectedHospitalService } from 'src/app/views/services/selected-hospital.service';
 import { HopitalHotel } from 'src/app/models/Hotel';
+import { map, switchMap } from 'rxjs/operators';
 
 
 @Component({
@@ -29,26 +30,44 @@ export class HotelsComponent implements OnInit {
   selectedHospital:any;
 
 
-  constructor(private selectedHospitalService:SelectedHospitalService,private ds:DataService ,private route:Router) { 
+  constructor(private selectedHospitalService:SelectedHospitalService,
+    private ds:DataService ,private route:Router, public activatedRoute:ActivatedRoute) { 
    //this.ds.getAllhotels().subscribe(data=>this.dataArray=data)
    //this.ds.getAlldossiers().subscribe(data=>this.dataArray=data) 
 
    }
 
   ngOnInit(): void {
-    this.selectedHospital=this.selectedHospitalService.getSelectedClinic();
-    console.log('hadha el id : ',this.selectedHospital.hopital_id)
-    this.ds.getAllhotels().subscribe(
-      (data: HopitalHotel[])=>{
-        console.log("hadhi il data lkollllllllll,",data)
-        this.dataArray = data.filter((hotel) => hotel.hotel_hopitalid === this.selectedHospital.hopital_id);
-        console.log("this is all the Reviews received",data)
-      },
-      (error) => {
-        console.error('Error fetching Reviews:', error);
-      }
+    this.activatedRoute.parent?.paramMap.pipe(
+      map(params => params.get('id')),
+      switchMap((id) => this.ds.getHospitalsById(id))
+   ).subscribe(
+     (data: any[]) => {
+       this.selectedHospital = data[0];
+       console.log("Données reçues amine : ", this.selectedHospital);
+     },
+     (error) => {
+       console.error('Erreur lors de la récupération des informations de l\'hôpital :', error);
+     }
+   )
+    // this.selectedHospital=this.selectedHospitalService.getSelectedClinic();
+    // console.log('hadha el id : ',this.selectedHospital.hopital_id)
+
+    this.activatedRoute.parent?.paramMap.pipe(
+      map(params => params.get('id')),
+      switchMap((id) => this.ds.getHotelsByHopitalId(id))
+   ).subscribe(
+    (data: HopitalHotel[])=>{
+      console.log("hadhi il data lkollllllllll,",data)
+      this.dataArray = data
+      //.filter((hotel) => hotel.hotel_hopitalid === this.selectedHospital.hopital_id);
+      console.log("this is all the Reviews received",data)
+    },
+    (error) => {
+      console.error('Error fetching Reviews:', error);
+    }
+   )
     
-    )
   }
 
   delete(id:any,i:number){

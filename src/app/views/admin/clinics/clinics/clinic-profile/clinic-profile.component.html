@@ -1,1 +1,59 @@
-<p>clinic-profile works!</p>
+<div class="container-xl px-4 mt-4">   
+    <!-- Hospital details card-->
+    <div class="card mb-4">
+        <div class="card-header">Hospital Information</div>
+        <div class="card-body">
+            <form>
+                <!-- Hospital Logo -->
+                <div class="mb-3 text-center">
+                    <img class="img-fluid mb-3" [src]="selectedHospital.hopital_logo" alt="{{selectedHospital.hopital_name}} Logo" style="max-width: 150px;">
+                </div>
+                <!-- Address -->
+                <div class="mb-3">
+                    <label class="small mb-1" for="inputAddress">Address</label>
+                    <input class="form-control" id="inputAddress" type="text" [value]="selectedHospital.hopital_adress" readonly>
+                </div>
+                <!-- City and Opening Year -->
+                <div class="row gx-3 mb-3">
+                    <div class="col-md-6">
+                        <label class="small mb-1" for="inputCity">City</label>
+                        <input class="form-control" id="inputCity" type="text" [value]="selectedHospital.hopital_city" readonly>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="small mb-1" for="inputOpeningYear">Opening Year</label>
+                        <input class="form-control" id="inputOpeningYear" type="text" [value]="selectedHospital.hopital_openyear" readonly>
+                    </div>
+                </div>
+                <!-- Number of Beds and Warranty Certificate -->
+                <div class="row gx-3 mb-3">
+                    <div class="col-md-6">
+                        <label class="small mb-1" for="inputBeds">Number of Beds</label>
+                        <input class="form-control" id="inputBeds" type="text" [value]="selectedHospital.hopital_nbrlits" readonly>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="small mb-1" for="inputWarranty">Direct Price Warranty Certificate</label>
+                        <input class="form-control" id="inputWarranty" type="text" [value]="selectedHospital.hopital_certificat" readonly>
+                    </div>
+                </div>
+                <!-- Phone Number -->
+                <div class="mb-3">
+                    <label class="small mb-1" for="inputPhone">Phone Number</label>
+                    <input class="form-control" id="inputPhone" type="tel" [value]="selectedHospital.hopital_tel" readonly>
+                </div>
+                <!-- Services List -->
+                <div class="mb-3">
+                    <label class="small mb-1">Services</label>
+                    <ul>
+                        <li *ngFor="let service of dataArray">
+                            <i [class]="service.service_icon_class"></i> {{service.service_name}}
+                        </li>
+                    </ul>
+                </div>
+                <!-- Save changes button -->
+                <div style="text-align: right;">
+                    <button class="btn btn-primary" type="button">Save changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

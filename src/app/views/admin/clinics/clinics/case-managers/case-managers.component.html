@@ -10,7 +10,7 @@
     <div class="card shadow mb-4">
         <div class="card-header py-3 d-flex justify-content-between align-items-center"> <!-- Changement effectué ici -->
             <h6 class="m-0 font-weight-bold text-primary">Liste Des Case Manager</h6>
-            <a routerLink="/admin/addmanager" class="btn btn-primary">+Add Case Manager</a>
+            <a routerLink="/admin/addmanager" class="btn btn-primary">+Case Manager</a>
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -53,86 +53,200 @@
 
 <!-- MODAL -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+  <div class="modal-dialog">
       <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Update Manager</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <!-- form update start here -->
-          <form #f="ngForm" (ngSubmit)="updatenewmanager(f)">
-            
-            <!-- hopital_id validation start here -->
-            <div class="form-group">
-              <label for="hopital_id">Hospital ID</label>
-              <input type="number" class="form-control" placeholder="Hospital ID" [(ngModel)]="dataManager.hopital_id" required name="hopital_id" #hopital_id="ngModel" ngModel min="1">
-            </div>
-            <div class="alert alert-danger" *ngIf="hopital_id.errors?.['required'] && hopital_id.touched">
-              Hospital ID is required
-            </div>
-            <div class="alert alert-danger" *ngIf="hopital_id.errors?.['min'] && hopital_id.touched">
-              Hospital ID must be at least 1
-            </div>
-            <!-- hopital_id validation end here -->
-            
-            <!-- hopitalmanager_fullname validation start here -->
-            <div class="form-group">
-              <label for="hopitalmanager_fullname">Full Name</label>
-              <input type="text" class="form-control" placeholder="Full Name" [(ngModel)]="dataManager.hopitalmanager_fullname" required name="hopitalmanager_fullname" #hopitalmanager_fullname="ngModel" ngModel>
-            </div>
-            <div class="alert alert-danger" *ngIf="hopitalmanager_fullname.errors?.['required'] && hopitalmanager_fullname.touched">
-              Full Name is required
-            </div>
-            <!-- hopitalmanager_fullname validation end here -->
-            
-            <!-- hopitalmanager_phone validation start here -->
-            <div class="form-group">
-              <label for="hopitalmanager_phone">Phone</label>
-              <input type="text" class="form-control" placeholder="Phone" [(ngModel)]="dataManager.hopitalmanager_phone" name="hopitalmanager_phone" #hopitalmanager_phone="ngModel" ngModel>
-            </div>
-            <!-- hopitalmanager_phone validation end here -->
-            
-            <!-- hopitalmanager_email validation start here -->
-            <div class="form-group">
-              <label for="hopitalmanager_email">Email</label>
-              <input type="email" class="form-control" placeholder="Email" [(ngModel)]="dataManager.hopitalmanager_email" name="hopitalmanager_email" #hopitalmanager_email="ngModel" ngModel>
-            </div>
-            <!-- hopitalmanager_email validation end here -->
-            
-            <!-- hopitalmanager_photo validation start here -->
-            <div class="form-group">
-              <label for="hopitalmanager_photo">Photo URL</label>
-              <input type="text" class="form-control" placeholder="Photo URL" [(ngModel)]="dataManager.hopitalmanager_photo" name="hopitalmanager_photo" #hopitalmanager_photo="ngModel" ngModel>
-            </div>
-            <!-- hopitalmanager_photo validation end here -->
-            
-            <!-- hopitalmanager_countries validation start here -->
-            <div class="form-group">
-              <label for="hopitalmanager_countries">Countries</label>
-              <input type="text" class="form-control" placeholder="Countries" [(ngModel)]="dataManager.hopitalmanager_countries" name="hopitalmanager_countries" #hopitalmanager_countries="ngModel" ngModel>
-            </div>
-            <!-- hopitalmanager_countries validation end here -->
-            
-            <div class="alert alert-success" *ngIf="messageSuccess">
-              {{messageSuccess}}
-            </div>      
+          <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Update Manager</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+          <div class="modal-body">
+              <!-- form update start here -->
+              <form #f="ngForm" (ngSubmit)="updatenewmanager(f)">
+                  <!-- hopital_id validation start here -->
+                  <div class="form-group">
+                      <i class="fas fa-hospital"></i>
+                      <input type="number" class="form-control" placeholder="Hospital ID" [(ngModel)]="dataManager.hopital_id" required name="hopital_id" #hopital_id="ngModel" min="1">
+                      <label for="hopital_id">Hospital ID</label>
+                  </div>
+                  <div class="alert alert-danger" *ngIf="hopital_id.errors?.['required'] && hopital_id.touched">
+                      Hospital ID is required
+                  </div>
+                  <div class="alert alert-danger" *ngIf="hopital_id.errors?.['min'] && hopital_id.touched">
+                      Hospital ID must be at least 1
+                  </div>
 
-            <button class="btn btn-primary" [disabled]="f.invalid">Update Manager</button>
-          
-          </form>
-          <!-- form update end here -->
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        </div>
+                  <!-- hopitalmanager_fullname validation start here -->
+                  <div class="form-group">
+                      <i class="fas fa-user"></i>
+                      <input type="text" class="form-control" placeholder="Full Name" [(ngModel)]="dataManager.hopitalmanager_fullname" required name="hopitalmanager_fullname" #hopitalmanager_fullname="ngModel">
+                      <label for="hopitalmanager_fullname">Full Name</label>
+                  </div>
+                  <div class="alert alert-danger" *ngIf="hopitalmanager_fullname.errors?.['required'] && hopitalmanager_fullname.touched">
+                      Full Name is required
+                  </div>
+
+                  <!-- hopitalmanager_phone validation start here -->
+                  <div class="form-group">
+                      <i class="fas fa-phone"></i>
+                      <input type="text" class="form-control" placeholder="Phone" [(ngModel)]="dataManager.hopitalmanager_phone" name="hopitalmanager_phone" #hopitalmanager_phone="ngModel">
+                      <label for="hopitalmanager_phone">Phone</label>
+                  </div>
+
+                  <!-- hopitalmanager_email validation start here -->
+                  <div class="form-group">
+                      <i class="fas fa-envelope"></i>
+                      <input type="email" class="form-control" placeholder="Email" [(ngModel)]="dataManager.hopitalmanager_email" name="hopitalmanager_email" #hopitalmanager_email="ngModel">
+                      <label for="hopitalmanager_email">Email</label>
+                  </div>
+
+                  <!-- hopitalmanager_photo validation start here -->
+                  <div class="form-group">
+                      <i class="fas fa-image"></i>
+                      <input type="text" class="form-control" placeholder="Photo URL" [(ngModel)]="dataManager.hopitalmanager_photo" name="hopitalmanager_photo" #hopitalmanager_photo="ngModel">
+                      <label for="hopitalmanager_photo">Photo URL</label>
+                  </div>
+
+                  <!-- hopitalmanager_countries validation start here -->
+                  <div class="form-group">
+                      <i class="fas fa-globe"></i>
+                      <input type="text" class="form-control" placeholder="Countries" [(ngModel)]="dataManager.hopitalmanager_countries" name="hopitalmanager_countries" #hopitalmanager_countries="ngModel">
+                      <label for="hopitalmanager_countries">Countries</label>
+                  </div>
+
+                  <div class="alert alert-success" *ngIf="messageSuccess">
+                      {{messageSuccess}}
+                  </div>
+
+                  <button class="btn btn-primary" [disabled]="f.invalid">Update Manager</button>
+              </form>
+              <!-- form update end here -->
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
       </div>
-    </div>
   </div>
+</div>
 
 <!-- Ajout de la bibliothèque FontAwesome -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
+<!-- Style for Modal -->
+<style>
+  .modal-content {
+      border-radius: 10px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      max-width: 600px;
+      width: 100%;
+  }
+
+  .modal-header {
+      background: #3498db;
+      color: white;
+      border-bottom: none;
+  }
+
+  .modal-title {
+      font-family: 'Arial Black', sans-serif;
+  }
+
+  .close {
+      color: white;
+      opacity: 1;
+  }
+
+  .modal-body {
+      background-color: #f9f9f9;
+      padding: 30px;
+  }
+
+  .form-group {
+      position: relative;
+      margin-bottom: 20px;
+  }
+
+  .form-group i {
+      position: absolute;
+      left: 10px;
+      top: 14px;
+      color: #3498db;
+  }
+
+  .form-control {
+      width: 100%;
+      padding: 10px 10px 10px 40px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 16px;
+      transition: border-color 0.3s;
+  }
+
+  .form-control:focus {
+      border-color: #3498db;
+      outline: none;
+  }
+
+  .form-group label {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      color: #aaa;
+      font-size: 14px;
+      transition: 0.3s;
+      pointer-events: none;
+  }
+
+  .form-control:focus + label,
+  .form-control:not(:placeholder-shown) + label {
+      top: -20px;
+      left: 0;
+      font-size: 12px;
+      color: #3498db;
+  }
+
+  .alert {
+      font-size: 12px;
+      margin-top: 5px;
+  }
+
+  .alert-danger {
+      color: red;
+  }
+
+  .alert-success {
+      color: green;
+  }
+
+  .btn-primary {
+      background-color: #3498db;
+      border: none;
+      border-radius: 5px;
+      color: white;
+      font-size: 16px;
+      padding: 10px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+  }
+
+  .btn-primary:hover {
+      background-color: #2980b9;
+  }
+
+  .btn-primary:disabled {
+      background-color: #aaa;
+      cursor: not-allowed;
+  }
+
+  .btn-secondary {
+      background-color: #aaa;
+      border: none;
+      border-radius: 5px;
+      color: white;
+      font-size: 16px;
+      padding: 10px;
+      cursor: pointer;
+  }
+</style>
 

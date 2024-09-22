@@ -1,9 +1,10 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DataService } from 'src/app/views/services/data.service';
 import { HopitalContact } from 'src/app/models/Contact';
 import { SelectedHospitalService } from 'src/app/views/services/selected-hospital.service';
+import { map, switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-notifications',
@@ -20,24 +21,53 @@ export class NotificationsComponent implements OnInit {
   messageSuccess=''
   selectedHospital:any;
 
-  constructor(private selectedHospitalService:SelectedHospitalService,private ds:DataService ,private route:Router) { 
+  constructor(private selectedHospitalService:SelectedHospitalService,private ds:DataService ,private route:Router, private activatedRoute:ActivatedRoute) { 
     //this.ds.getAllcontacts().subscribe(data=>this.dataArray=data)
   }
 
   ngOnInit(): void {
-    this.selectedHospital=this.selectedHospitalService.getSelectedClinic();
-    console.log('hadha el id : ',this.selectedHospital.hopital_id)
-    this.ds.getAllcontacts().subscribe(
-      (data: HopitalContact[])=>{
-        console.log("hadhi il data lkollllllllll,",data)
-        this.dataArray = data.filter((contact) => contact.hopital_id === this.selectedHospital.hopital_id);
-        console.log("this is all the contacts received",data)
-      },
-      (error) => {
-        console.error('Error fetching contacts:', error);
-      }
+    this.activatedRoute.parent?.paramMap.pipe(
+      map(params => params.get('id')),
+      switchMap((id) => this.ds.getHospitalsById(id))
+   ).subscribe(
+     (data: any[]) => {
+       this.selectedHospital = data[0];
+       console.log("Données reçues amine : ", this.selectedHospital);
+     },
+     (error) => {
+       console.error('Erreur lors de la récupération des informations de l\'hôpital :', error);
+     }
+   )
+
+   this.activatedRoute.parent?.paramMap.pipe(
+    map(params => params.get('id')),
+    switchMap((id) => this.ds.getContactsByHopitalId(id))
+ ).subscribe(
+  (data: HopitalContact[])=>{
+    console.log("hadhi il data lkollllllllll,",data)
+    this.dataArray = data
+    //.filter((contact) => contact.hopital_id === this.selectedHospital.hopital_id);
+    console.log("this is all the contacts received",data)
+  },
+  (error) => {
+    console.error('Error fetching contacts:', error);
+  }
+
+ )
+    // this.selectedHospital=this.selectedHospitalService.getSelectedClinic();
+    // console.log('hadha el id : ',this.selectedHospital.hopital_id)
+    // this.ds.getContactsByHopitalId(this.selectedHospital.hopital_id).subscribe(
+    //   (data: HopitalContact[])=>{
+    //     console.log("hadhi il data lkollllllllll,",data)
+    //     this.dataArray = data
+    //     //.filter((contact) => contact.hopital_id === this.selectedHospital.hopital_id);
+    //     console.log("this is all the contacts received",data)
+    //   },
+    //   (error) => {
+    //     console.error('Error fetching contacts:', error);
+    //   }
     
-    )
+    // )
   }
 
   delete(id:any,i:number){

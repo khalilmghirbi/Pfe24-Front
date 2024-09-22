@@ -1,21 +1,132 @@
-<div class="container">
-    <form #f="ngForm" (ngSubmit)="add(f)">
-      <!-- procedure_name validation start here -->
-<div class="form-group">
-    <label for="procedure_name">Procedure Name</label>
-    <input type="text" class="form-control" placeholder="procedure_name" required name="procedure_name" #procedure_name="ngModel" ngModel minlength="2" maxlength="20">
-</div>
-<div class="alert alert-danger" *ngIf="procedure_name.errors?.['required'] && procedure_name.touched">
-    Procedure Name is required
-</div>
-<div class="alert alert-danger" *ngIf="procedure_name.errors?.['minlength'] && procedure_name.touched">
-    Procedure Name must be at least 2 characters
-</div>
-<!-- procedure_name validation end here -->
- 
-        <button class="btn btn-primary" [disabled]="f.invalid">Add Hotel</button>
-    </form>
-</div>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajouter une Procédure</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(120deg, #3498db, #8e44ad);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+        }
 
-<!-- Ajout de la bibliothèque FontAwesome -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+        .container {
+            background-color: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            max-width: 500px;
+            width: 100%;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+            font-family: 'Arial Black', sans-serif;
+        }
+
+        .form-group {
+            position: relative;
+            margin-bottom: 30px;
+        }
+
+        label {
+            position: absolute;
+            top: 10px;
+            left: 40px;
+            color: #aaa;
+            font-size: 14px;
+            transition: 0.3s;
+            pointer-events: none;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px 10px 10px 40px;
+            border: none;
+            border-bottom: 2px solid #ccc;
+            outline: none;
+            font-size: 16px;
+            transition: 0.3s;
+        }
+
+        input:focus {
+            border-bottom: 2px solid #3498db;
+        }
+
+        input:focus + label,
+        input:not(:placeholder-shown) + label {
+            top: -20px;
+            left: 0;
+            font-size: 12px;
+            color: #3498db;
+        }
+
+        .form-group i {
+            position: absolute;
+            left: 10px;
+            top: 14px;
+            color: #3498db;
+        }
+
+        .alert {
+            color: red;
+            font-size: 12px;
+            margin-top: -20px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        button:disabled {
+            background-color: #aaa;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Ajouter une Procédure</h2>
+        <form #f="ngForm" (ngSubmit)="add(f)">
+            <!-- Procedure Name -->
+            <div class="form-group">
+                <i class="fas fa-file-alt"></i>
+                <input type="text" class="form-control" placeholder="Nom de la procédure" required name="procedure_name" #procedure_name="ngModel" ngModel minlength="2" maxlength="20">
+                
+            </div>
+            <div class="alert" *ngIf="procedure_name.errors?.['required'] && procedure_name.touched">
+                Le nom de la procédure est requis
+            </div>
+            <div class="alert" *ngIf="procedure_name.errors?.['minlength'] && procedure_name.touched">
+                Le nom de la procédure doit contenir au moins 2 caractères
+            </div>
+            <div class="alert" *ngIf="procedure_name.errors?.['maxlength'] && procedure_name.touched">
+                Le nom de la procédure doit contenir moins de 20 caractères
+            </div>
+
+            <button class="btn btn-primary" [disabled]="f.invalid">Ajouter une Procédure</button>
+        </form>
+    </div>
+
+    <!-- Ajout de la bibliothèque FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</body>
+</html>

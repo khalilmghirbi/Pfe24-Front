@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { map, switchMap } from 'rxjs/operators';
 import { Hopital_avis } from 'src/app/models/Review';
 import { DataService } from 'src/app/views/services/data.service';
 import { SelectedHospitalService } from 'src/app/views/services/selected-hospital.service';
@@ -32,23 +33,40 @@ export class ReviewsComponent implements OnInit {
   }
   selectedHospital:any;
 
-  constructor(private selectedHospitalService:SelectedHospitalService,private ds:DataService ,private route:Router) {}
+  constructor(private selectedHospitalService:SelectedHospitalService,
+    private ds:DataService ,private route:Router, private activatedRoute:ActivatedRoute) {}
 
 
   ngOnInit(): void {
-    this.selectedHospital=this.selectedHospitalService.getSelectedClinic();
-    console.log('hadha el id : ',this.selectedHospital.hopital_id)
-    this.ds.getAllreviews().subscribe(
-      (data: Hopital_avis[])=>{
-        console.log("hadhi il data lkollllllllll,",data)
-        this.dataArray = data.filter((review) => review.hopitalavis_hopital_id === this.selectedHospital.hopital_id);
-        console.log("this is all the Reviews received",data)
-      },
-      (error) => {
-        console.error('Error fetching Reviews:', error);
-      }
-    
-    )
+    this.activatedRoute.parent?.paramMap.pipe(
+      map(params => params.get('id')),
+      switchMap((id) => this.ds.getHospitalsById(id))
+   ).subscribe(
+     (data: any[]) => {
+       this.selectedHospital = data[0];
+       console.log("Données reçues amine : ", this.selectedHospital);
+     },
+     (error) => {
+       console.error('Erreur lors de la récupération des informations de l\'hôpital :', error);
+     }
+   )
+    // this.selectedHospital=this.selectedHospitalService.getSelectedClinic();
+    // console.log('hadha el id : ',this.selectedHospital.hopital_id)
+
+    this.activatedRoute.parent?.paramMap.pipe(
+      map(params => params.get('id')),
+      switchMap((id) => this.ds.getReviewsByHopitalId(id))
+   ).subscribe(
+    (data: Hopital_avis[])=>{
+      console.log("hadhi il data lkollllllllll,",data)
+      this.dataArray = data
+      //.filter((review) => review.hopitalavis_hopital_id === this.selectedHospital.hopital_id);
+      console.log("this is all the Reviews received",data)
+    },
+    (error) => {
+      console.error('Error fetching Reviews:', error);
+    }
+   )
   }
 
   getdata(hopitalavis_fullname:string, hopitalmanager_fullname:string,

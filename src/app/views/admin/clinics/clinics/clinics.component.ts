@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DataService } from 'src/app/views/services/data.service';
 import { MenuItem } from 'primeng/api';
 import { MenubarModule } from 'primeng/menubar';
@@ -15,7 +15,7 @@ export class ClinicsComponent implements OnInit {
   selectedHospital: any;
   items: MenuItem[] =[];
 
-  constructor(private ds:DataService ,private router:Router) {}
+  constructor(private ds:DataService ,private router:Router, private route: ActivatedRoute) {}
 
     ngOnInit(): void {
       const creatorId = localStorage.getItem('id_user'); // Suppose que l'ID utilisateur est stocké dans localStorage
@@ -48,42 +48,42 @@ export class ClinicsComponent implements OnInit {
           {
               label: 'Profile',
               icon: 'pi pi-home',
-              command: () => this.router.navigate(['/admin/clinics/profile'])
+              command: () => this.router.navigate(['profile'], { relativeTo: this.route })
           },
           {
               label: 'Media',
               icon: 'pi pi-images',
-              command: () => this.router.navigate(['/admin/clinics/media'])
+              command: () => this.router.navigate(['media'], { relativeTo: this.route })
           },
           {
               label: 'Treatments',
               icon: 'pi pi-heart',
-              command: () => this.router.navigate(['/admin/clinics/treatments'])
+              command: () => this.router.navigate(['treatments'], { relativeTo: this.route })
           },
           {
               label: 'Doctors',
               icon: 'pi pi-user',
-              command: () => this.router.navigate(['/admin/clinics/doctors'])
+              command: () => this.router.navigate(['doctors'], { relativeTo: this.route })
           },
           {
             label: 'Notifications',
             icon: 'pi pi-envelope',
-            command: () => this.router.navigate(['/admin/clinics/notifications'])
+            command: () => this.router.navigate(['notifications'], { relativeTo: this.route })
           },
           {
             label: 'Case Managers',
             icon: 'pi pi-user',
-            command: () => this.router.navigate(['/admin/clinics/caseManagers'])
+            command: () => this.router.navigate(['caseManagers'], { relativeTo: this.route })
           },
           {
             label: 'Hotels',
             icon: 'pi pi-home',
-            command: () => this.router.navigate(['/admin/clinics/hotels'])
+            command: () => this.router.navigate(['hotels'], { relativeTo: this.route })
           },
           {
             label: 'Reviews',
             icon: 'pi pi-star',
-            command: () => this.router.navigate(['/admin/clinics/reviews'])
+            command: () => this.router.navigate(['reviews'], { relativeTo: this.route })
           }
       ]
       
